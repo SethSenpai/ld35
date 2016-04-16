@@ -31,7 +31,7 @@ var Membrane = (function() {
       game.load.audio('membrane-down', 'sfx/press_down.wav');
       game.load.audio('membrane-up', 'sfx/press_up.wav');
     },
-    create: function(game, level) {
+    create: function(game, stage, level) {
       
       var sfx = {
         down: game.add.audio('membrane-down'),
@@ -39,8 +39,11 @@ var Membrane = (function() {
       }
       
       // Phaser.Group instances with connectors and lines
-      var vertices = game.add.group();
-      var edges = game.add.group();
+      var vertices = game.make.group();
+      var edges = game.make.group();
+
+      stage.addChild(vertices);
+      stage.addChild(edges);
       
       // Lookup table:
       // { 0: [[edge1, 1], ...],

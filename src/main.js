@@ -10,6 +10,7 @@ var game = new Phaser.Game(WIDTH, HEIGHT, Phaser.WEBGL, '', {
   update: update
 });
 
+var stage;
 var player;
 var recepticle;
 var target;
@@ -34,20 +35,23 @@ function create() {
 
   game.physics.startSystem(Phaser.Physics.P2JS);
   game.physics.p2.restitution = 0.8;
-  //game.physics.p2.gravity.y = 500;
-  
-  game.add.image(0, 0, 'background');
-  
-  Membrane.create(game, level);
-  
+
+  stage = game.add.group();
+
+  var image = game.make.image(0, 0, 'background');
+
+  stage.add(image);
+
+  Membrane.create(game, stage, level);
+
   // Add main 'player' molecule
-  player = game.add.sprite(level.start.x, level.start.y, 'water');
+  player = stage.create(level.start.x, level.start.y, 'water');
   game.physics.p2.enableBody(player, DEBUG);
   player.body.clearShapes();
   player.body.loadPolygon('water-data', 'water_molecule_small');
 
   // Add recepticle
-  recepticle = game.add.sprite(level.end.x, level.end.y, 'recepticle');
+  recepticle = stage.create(level.end.x, level.end.y, 'recepticle');
   game.physics.p2.enableBody(recepticle, DEBUG);
   recepticle.body.clearShapes();
   recepticle.body.loadPolygon('recepticle-data', 'recepticle_small');
