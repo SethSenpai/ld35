@@ -1,18 +1,52 @@
-/// <reference path="third-party/phaser.d.ts"/>
+/// <reference path="../third-party/phaser.d.ts"/>
+
+var DEBUG = false;
 
 var game = new Phaser.Game(800, 600, Phaser.WEBGL, '', {
-  preload: preload, 
+  preload: preload,
   create: create,
   update: update
 });
-  
+
+var vertices = [
+  [-70, -50],
+  [-50, 50],
+  [50, 50],
+  [50, -70]
+];
+
 function preload() {
-  game.load.image('logo', 'phaser.png');
+  game.load.image('smile', 'img/smile.png');
 }
 
 function create() {
-  var logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
-  logo.anchor.setTo(0.5, 0.5);
+  game.physics.startSystem(Phaser.Physics.P2JS);
+  
+  game.physics.p2.restitution = 0.9;
+  
+  game.physics.p2.gravity.y = 500;
+  
+  var balls = game.add.physicsGroup(Phaser.Physics.P2JS);
+  
+  for (var i = 0; i < 20; i++) {
+    var ball = balls.create(Math.random() * 800, Math.random() * 600, 'smile');
+    ball.body.setCircle(16);
+  }
+  
+  var poly = new Phaser.Polygon();
+  poly.setTo(vertices.reduce(function(a, b) {
+    return a.concat(b);
+  }, []));
+  
+  var graphics = game.add.graphics(200, 100);
+  
+  graphics.beginFill(0xff33ff);
+  graphics.drawPolygon(poly.points);
+  graphics.endFill();
+  
+  game.physics.p2.enable(graphics, DEBUG);
+  graphics.body.clearShapes();
+  graphics.body.addPolygon({}, vertices);
 }
 
 function update() {
