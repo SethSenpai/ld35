@@ -1,0 +1,76 @@
+{ 
+    
+    "ethylene_molecule_small": [
+        
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   13, 76.5  ,  17, 76.5  ,  22.5, 87  ,  7, 99.5  ,  0.5, 94  ,  0.5, 82  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   84, 99.5  ,  77.5, 94  ,  76.5, 85  ,  81.5, 78  ,  84.5, 76  ,  94, 77.5  ,  99.5, 84  ,  96, 97.5  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   96.5, 20  ,  85, 22.5  ,  76.5, 9  ,  81, 1.5  ,  90, -0.5  ,  99.5, 6  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   7, 99.5  ,  22.5, 87  ,  19, 97.5  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   19.5, 27  ,  16.5, 26  ,  8, -0.5  ,  9, -0.5  ,  21.5, 5  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   48.5, 46  ,  50.5, 50  ,  19.5, 27  ,  38, 29.5  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   50.5, 50  ,  48.5, 46  ,  60.5, 30  ,  80, 25.5  ,  82, 27.5  ,  81.5, 67  ,  79, 69.5  ,  59, 65.5  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   81.5, 67  ,  82, 27.5  ,  90.5, 39  ,  92.5, 54  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   8, -0.5  ,  16.5, 26  ,  3.5, 20  ,  -0.5, 12  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   21, 68.5  ,  17, 68.5  ,  16.5, 26  ,  19.5, 27  ,  50.5, 50  ,  41, 64.5  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   85, 22.5  ,  82, 27.5  ,  80, 25.5  ,  76.5, 9  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   7.5, 40  ,  16.5, 26  ,  17, 68.5  ,  5.5, 52  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   79, 69.5  ,  81.5, 67  ,  84.5, 76  ,  81.5, 78  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   17, 68.5  ,  21, 68.5  ,  17, 76.5  ,  13, 76.5  ]
+        }
+    ]
+}
