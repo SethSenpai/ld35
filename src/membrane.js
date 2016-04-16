@@ -30,13 +30,17 @@ var Membrane = (function() {
       game.load.image('vertex', 'sprites/connector_small.png');
       game.load.audio('membrane-down', 'sfx/press_down.wav');
       game.load.audio('membrane-up', 'sfx/press_up.wav');
+      game.load.audio('bounce-hurt', 'sfx/bounce_hurt.wav');
     },
     create: function(game, stage, level) {
       
       var sfx = {
         down: game.add.audio('membrane-down'),
-        up: game.add.audio('membrane-up')
-      }
+        up: game.add.audio('membrane-up'),
+        bounce: game.add.audio('bounce-hurt')
+      };
+
+      sfx.bounce.volume = 0.2;
       
       // Phaser.Group instances with connectors and lines
       var vertices = game.make.group();
@@ -84,6 +88,9 @@ var Membrane = (function() {
         edges.addChild(e);
         game.physics.p2.enable(e, DEBUG);
         e.body.static = true;
+        e.body.onBeginContact.add(function () {
+          sfx.bounce.play();
+        });
         e.alpha = 0.5;
         
         index[i] = index[i] || [];

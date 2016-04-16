@@ -65,16 +65,6 @@ function create() {
   game.physics.p2.enableBody(target, DEBUG);
   target.body.addCircle(10);
   target.body.static = true;
-  game.physics.p2.setPostBroadphaseCallback(function (a, b) {
-    if ((a == player.body && b == target.body) || (a == target.body && b == player.body)) {
-      if (!won) {
-        win.play();
-        won = true;
-      }
-      return false;
-    }
-    return true;
-  }, this);
 
   // Add border for scaled mode
   border = game.make.graphics();
@@ -88,6 +78,18 @@ function create() {
   var music = game.add.audio('music');
   music.volume = 1.0;
   music.play();
+
+  // Handle special collisions
+  game.physics.p2.setPostBroadphaseCallback(function (a, b) {
+    if (utils.equalPairs(a, b, player.body, target.body)) {
+      if (!won) {
+        win.play();
+        won = true;
+      }
+      return false;
+    }
+    return true;
+  }, this);
 }
 
 function update() {
