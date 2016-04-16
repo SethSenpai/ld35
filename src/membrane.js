@@ -6,7 +6,7 @@ var Membrane = (function() {
       x: v1.x + (v2.x - v1.x) / 2,
       y: v1.y + (v2.y - v1.y) / 2
     };
-    var size = 5;
+    var size = 2;
     var length = Math.sqrt(
       Math.pow(v1.x - v2.x, 2) +
       Math.pow(v1.y - v2.y, 2)
@@ -80,6 +80,7 @@ var Membrane = (function() {
         edges.addChild(e);
         game.physics.p2.enable(e, DEBUG);
         e.body.static = true;
+        e.alpha = 0.5;
         
         index[i] = index[i] || [];
         index[i].push([e, j]);
