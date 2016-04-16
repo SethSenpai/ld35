@@ -47,7 +47,7 @@ function addVertex(v) {
     v[0] = sprite.x;
     v[1] = sprite.y;
     poly = new Phaser.Polygon(points(vertices));
-    //setPolygon();
+    setPolygon();
   }
   
   function onDragStop() {
