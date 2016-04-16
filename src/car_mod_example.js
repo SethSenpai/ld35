@@ -16,7 +16,10 @@ function preload(){
 
 var poly;
 var graphics;
+var actualGraphics;
 
+var x = 300;
+var y = 300;
 var vertices = [
   [-100, -100],
   [-100, 100],
@@ -38,12 +41,16 @@ function points(vertices) {
 }
 
 function addVertex(v) {
-  var sprite = graphics.addChild(game.make.sprite(v[0]/*-375/2+48*/, v[1]/*-325/2+48*/, 'point'));
+  var sprite = actualGraphics.addChild(game.make.sprite(v[0]/*-375/2+48*/, v[1]/*-325/2+48*/, 'point'));
   
   function onDragUpdate(sprite, pointer, dragX, dragY, snapPoint) {
     v[0] = sprite.x;
     v[1] = sprite.y;
     poly = new Phaser.Polygon(points(vertices));
+    //setPolygon();
+  }
+  
+  function onDragStop() {
     setPolygon();
   }
   
@@ -51,14 +58,22 @@ function addVertex(v) {
   sprite.inputEnabled = true;
   sprite.input.enableDrag();
   sprite.events.onDragUpdate.add(onDragUpdate);
+  sprite.events.onDragStop.add(onDragStop);
 }
 
 function setPolygon() {
   graphics.body.clearShapes();
-  graphics.body.addPolygon({}, points(vertices));
+  var pol = graphics.body.addPolygon({}, points(vertices));
+  //pol.sensor = true;
+  graphics.body.data.shapes[0].sensor = true;
+  graphics.body.x = x;
+  graphics.body.y = y;
+  //graphics.body.data.position = [0, 0];
+  //graphics.body.data.shapes[0].centerOfMass = [0, 0];
 }
 
 function drawPolygon() {
+  var graphics = actualGraphics;
   graphics.clear();
   if (poly.contains(game.input.x, game.input.y)) {
     graphics.beginFill(0xFF3300);
@@ -67,12 +82,15 @@ function drawPolygon() {
   }
   var translated = poly.points.map(function(p) {
     return p;
+    /*
     return p.clone().subtract(
       graphics.body.x, //- graphics.position.x, 
       graphics.body.y //- graphics.position.y
     );
+    */
   });
-  graphics.drawPolygon(translated);
+ // console.log(poly.points);
+  graphics.drawPolygon(poly.points);//vertices.map(function(v) { return new Phaser.Point(v[0], v[1]); }));
   graphics.endFill();
 }
 
@@ -102,13 +120,18 @@ function create() {
    
   poly = new Phaser.Polygon(points(vertices));
 
-  graphics = game.add.graphics(400, 400);
+  graphics = game.add.graphics(x, y);
   game.physics.p2.enable(graphics, DEBUG);
   //graphics.body.offset.x = 200;
   graphics.body.static = true;
+  
+  graphics.body.data.fixedX = true;
+  
+  
+  actualGraphics = game.add.graphics(x, y);
+  
   setPolygon();
 
-  drawPolygon();
   
   vertices.forEach(addVertex);
   
@@ -139,6 +162,7 @@ function update() {
 }
 
 function render() {
+  drawPolygon();
   game.debug.text(game.input.x + ' x ' + game.input.y, 32, 32);
 	game.context.fillStyle = 'rgb(255,255,0)';
   vertices.forEach(function(v) {
