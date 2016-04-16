@@ -28,8 +28,15 @@ var Membrane = (function() {
   return {
     preload: function(game) {
       game.load.image('vertex', 'sprites/connector_small.png');
+      game.load.audio('membrane-down', 'sfx/press_down.wav');
+      game.load.audio('membrane-up', 'sfx/press_up.wav');
     },
     create: function(game, level) {
+      
+      var sfx = {
+        down: game.add.audio('membrane-down'),
+        up: game.add.audio('membrane-up')
+      }
       
       // Phaser.Group instances with connectors and lines
       var vertices = game.add.group();
@@ -49,6 +56,12 @@ var Membrane = (function() {
         if (!v.fixed) {
           s.inputEnabled = true;
           s.input.enableDrag();
+          s.events.onDragStart.add(function() {
+            sfx.down.play();
+          });
+          s.events.onDragStop.add(function() {
+            sfx.up.play();
+          });
           s.events.onDragUpdate.add(function() {
             index[i].forEach(function(link) {
               updateEdge(link[0], s, vertices.getAt(link[1]));
