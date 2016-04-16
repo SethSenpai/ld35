@@ -18,6 +18,8 @@ function preload() {
   game.load.image('recepticle', 'sprites/recepticle_small.png');
   game.load.image('background', 'sprites/background.png');
   
+  game.load.audio('music', 'sfx/bg_music.ogg');
+  
   game.load.physics('water-data', 'sprites/water_molecule_small.json');
   game.load.physics('recepticle-data', 'sprites/recepticle_small.json');
   
@@ -47,6 +49,10 @@ function create() {
   recepticle.body.clearShapes();
   recepticle.body.loadPolygon('recepticle-data', 'recepticle_small');
   recepticle.body.static = true;
+
+  // Add music
+  var music = game.add.audio('music');
+  music.play();
 }
 
 function update() {
