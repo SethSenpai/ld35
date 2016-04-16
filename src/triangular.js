@@ -1,8 +1,8 @@
 /// <reference path="../third-party/phaser.d.ts"/>
 
-var DEBUG = true;
-var WIDTH = 640;
-var HEIGHT = 480;
+var DEBUG = false;
+var WIDTH = 1280;
+var HEIGHT = 720;
 var LEVEL = {
   vertices: [
     { x: 10, y: HEIGHT / 3, fixed: true },
@@ -40,7 +40,7 @@ function updateEdge(e, v1, v2) {
   e.body.setRectangle(length, size, 0, 0, 0);
       
   e.clear();
-  e.beginFill(0xff3300);
+  e.beginFill(0xffffff);
   e.drawRect(
     - length / 2,
     - size / 2,
@@ -51,15 +51,21 @@ function updateEdge(e, v1, v2) {
 }
 
 function preload() {
-  game.load.image('vertex', 'img/vertex.png');
-  game.load.image('smile', 'img/smile.png');
+  game.load.image('vertex', 'sprites/connector.png');
+  game.load.image('water', 'sprites/water_molecule.png');
+  game.load.image('background', 'sprites/background.png');
 }
 
 function create() {
+  var edgeGroup;
+  
   game.physics.startSystem(Phaser.Physics.P2JS);
   game.physics.p2.restitution = 0.9;
   game.physics.p2.gravity.y = 500;
   
+  game.add.image(0, 0, 'background');
+  
+  edgeGroup = game.add.group();
   vertices = game.add.group();
   edges = {};
   
@@ -83,7 +89,9 @@ function create() {
       var j = (i + 1) % vertices.length;
       var first = vertices.getAt(i);
       var second = vertices.getAt(j);
-      var e = game.add.graphics();
+      var e = game.make.graphics();
+      
+      edgeGroup.addChild(e);
       
       edges[i] = edges[i] || [];
       edges[i].push([e, j]);
@@ -98,7 +106,7 @@ function create() {
   
   var balls = game.add.physicsGroup(Phaser.Physics.P2JS);
   for (var i = 0; i < 20; i++) {
-    var ball = balls.create(Math.random() * WIDTH, Math.random() * HEIGHT, 'smile');
+    var ball = balls.create(Math.random() * WIDTH, Math.random() * HEIGHT, 'water');
     ball.body.setCircle(20);
   }
 }
