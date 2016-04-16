@@ -23,6 +23,7 @@ function preload() {
   game.load.image('background', 'sprites/background.png');
   
   game.load.audio('music', 'sfx/bg_music.ogg');
+  game.load.audio('finish', 'sfx/finish.wav');
   
   game.load.physics('water-data', 'sprites/water_molecule_small.json');
   game.load.physics('recepticle-data', 'sprites/recepticle_small.json');
@@ -32,13 +33,13 @@ function preload() {
 
 function create() {
   var level = LEVEL.ONE;
+  var image = game.make.image(0, 0, 'background');
+  var win = game.add.audio('finish');
 
   game.physics.startSystem(Phaser.Physics.P2JS);
   game.physics.p2.restitution = 0.8;
 
   stage = game.add.group();
-
-  var image = game.make.image(0, 0, 'background');
 
   stage.add(image);
 
@@ -63,9 +64,11 @@ function create() {
   target.body.addCircle(10);
   target.body.static = true;
   game.physics.p2.setPostBroadphaseCallback(function (a, b) {
-    if (!won && ((a == player.body && b == target.body) || (a == target.body && b == player.body))) {
-      alert('win!');
-      won = true;
+    if ((a == player.body && b == target.body) || (a == target.body && b == player.body)) {
+      if (!won) {
+        win.play();
+        won = true;
+      }
       return false;
     }
     return true;
