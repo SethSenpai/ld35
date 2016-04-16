@@ -12,6 +12,9 @@ var game = new Phaser.Game(WIDTH, HEIGHT, Phaser.WEBGL, '', {
 
 var player;
 var recepticle;
+var target;
+
+var won = false;
 
 function preload() { 
   game.load.image('water', 'sprites/water_molecule_small.png');
@@ -50,8 +53,23 @@ function create() {
   recepticle.body.loadPolygon('recepticle-data', 'recepticle_small');
   recepticle.body.static = true;
 
+  // Add final target
+  target = game.add.graphics(level.end.x - 10, level.end.y);
+  game.physics.p2.enableBody(target, DEBUG);
+  target.body.addCircle(10);
+  target.body.static = true;
+  game.physics.p2.setPostBroadphaseCallback(function (a, b) {
+    if (!won && ((a == player.body && b == target.body) || (a == target.body && b == player.body))) {
+      alert('win!');
+      won = true;
+      return false;
+    }
+    return true;
+  }, this);
+
   // Add music
   var music = game.add.audio('music');
+  music.volume = 1.0;
   music.play();
 }
 
