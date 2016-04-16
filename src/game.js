@@ -38,7 +38,7 @@ function create() {
     return a.concat(b);
   }, []));
   
-  var graphics = game.add.graphics(200, 100);
+  var graphics = game.add.graphics(200, 500);
   
   graphics.beginFill(0xff33ff);
   graphics.drawPolygon(poly.points);
@@ -47,6 +47,9 @@ function create() {
   game.physics.p2.enable(graphics, DEBUG);
   graphics.body.clearShapes();
   graphics.body.addPolygon({}, vertices);
+  //graphics.body.data.shapes[0].sensor = true;
+  //graphics.body.gravityScale = 0;
+  graphics.body.static = true;
 }
 
 function update() {
