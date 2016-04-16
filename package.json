@@ -1,0 +1,7 @@
+{
+  "name": "ld35",
+  "version": "1.0.0",
+  "dependencies": {
+    "http-server": "^0.9.0"
+  }
+}
