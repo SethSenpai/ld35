@@ -51,8 +51,8 @@ function updateEdge(e, v1, v2) {
 }
 
 function preload() {
-  game.load.image('vertex', 'sprites/connector.png');
-  game.load.image('water', 'sprites/water_molecule.png');
+  game.load.image('vertex', 'sprites/connector_small.png');
+  game.load.image('water', 'sprites/water_molecule_small.png');
   game.load.image('background', 'sprites/background.png');
 }
 
