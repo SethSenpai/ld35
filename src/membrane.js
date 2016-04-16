@@ -56,20 +56,21 @@ var Membrane = (function() {
         var s = vertices.create(v.x, v.y, 'vertex');
         s.anchor.set(0.5);
         
+        s.inputEnabled = true;
+        s.events.onDragStart.add(function () {
+          sfx.down.play();
+        });
+        s.events.onDragStop.add(function () {
+          sfx.up.play();
+        });
+        s.events.onDragUpdate.add(function () {
+          index[i].forEach(function (link) {
+            updateEdge(link[0], s, vertices.getAt(link[1]));
+          });
+        });
+
         if (!v.fixed) {
-          s.inputEnabled = true;
           s.input.enableDrag();
-          s.events.onDragStart.add(function() {
-            sfx.down.play();
-          });
-          s.events.onDragStop.add(function() {
-            sfx.up.play();
-          });
-          s.events.onDragUpdate.add(function() {
-            index[i].forEach(function(link) {
-              updateEdge(link[0], s, vertices.getAt(link[1]));
-            });
-          });
         }
       });
       
