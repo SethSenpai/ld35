@@ -66,13 +66,16 @@ function create() {
   LEVEL.vertices.forEach(function(v, i) {
     var s = vertices.create(v.x, v.y, 'vertex');
     s.anchor.set(0.5);
-    s.inputEnabled = true;
-    s.input.enableDrag();
-    s.events.onDragUpdate.add(function(sprite, pointer, dragX, dragY, snapPoint) {
-      edges[i].forEach(function(link) {
-        updateEdge(link[0], s, vertices.getAt(link[1]));
+    
+    if (!v.fixed) {
+      s.inputEnabled = true;
+      s.input.enableDrag();
+      s.events.onDragUpdate.add(function(sprite, pointer, dragX, dragY, snapPoint) {
+        edges[i].forEach(function(link) {
+          updateEdge(link[0], s, vertices.getAt(link[1]));
+        });
       });
-    });
+    }
   });
   
   ~function() {
