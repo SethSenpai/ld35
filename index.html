@@ -4,9 +4,15 @@
 <script src="third-party/phaser.min.js"></script>
 <style>
   body { margin: 0; }
+  @font-face {  font-family: 'Bebas';  src: url('fonts/bebasbold.ttf') format('truetype');} 
+  @font-face {  font-family: 'bebaslight';  src: url('fonts/bebaslight.ttf') format('truetype');} 
+  body {    font-family: 'Bebas';}.fontLoader {    position: absolute;    left: -1000px;}
+  .fontLoader2 { font-family: 'bebaslight';   position: absolute;    left: -1000px;}
 </style>
 <body>
 <script src="src/main.js"></script>
 <script src="src/levels.js"></script>
 <script src="src/membrane.js"></script>
 <script src="src/utils.js"></script>
+<span class="fontLoader">.</span>
+<span class="fontLoader2">.</span>
