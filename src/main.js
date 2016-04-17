@@ -50,7 +50,7 @@ function preload() {
 }
 
 function create() {
-  var level = LEVEL.ONE;
+  var level = utils.retrieve('level');
   var win = game.add.audio('finish');
   
   //create timer
