@@ -80,11 +80,6 @@ function create() {
     membranes.push(Membrane.create(game, stage, level, i));
   });
   
-  //create timer
-  timer = game.time.create(false);
-  //start time. can be put somewhere else later when the level starts etc
-  timer.start();
-  
   //score display
   bar = game.add.graphics();
   styleBoardLarge = {font: "36px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
