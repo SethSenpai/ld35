@@ -88,8 +88,7 @@ function create() {
   
   //create timer
   timer = game.time.create(false);
-  //start time. can be put somewhere else later when the level starts etc
-  timer.start();
+  
   
   //score display
   bar = game.add.graphics();
@@ -176,6 +175,8 @@ function update() {
   
   if(spaceKey.isDown){
 	  gameStarted = true;
+	  //start time. can be put somewhere else later when the level starts etc
+	  timer.start();
   }
   // Accelerate player to recepticle
   // check if player pressed space first to allow for thinking time
