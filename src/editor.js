@@ -41,6 +41,8 @@
       button(x, y, 'Export Level…', showExportPopup);
       x += BUTTON_WIDTH + SPACING;
       button(x, y, 'Load Level…', load);
+      x += BUTTON_WIDTH + SPACING;
+      button(x, y, 'Save Level', save);
     })();
 
     // Create a button
@@ -82,12 +84,17 @@
       chrome.visible = false;
     }
 
-    function showExportPopup() {
+    function jsonify() {
       var level = {
         start: { x: player.x, y: player.y },
         end: { x: recepticle.x, y: recepticle.y },
         vertices: membrane.json()
       };
+      return level;
+    }
+
+    function showExportPopup() {
+      var level = jsonify();
       var s = JSON.stringify(level);
 
       popup.innerHTML =
@@ -102,6 +109,10 @@
 
     function load() {
       console.log('not implemented yet');
+    }
+
+    function save() {
+      utils.store('level', jsonify());
     }
   }
 

@@ -57,9 +57,13 @@ function preload() {
 }
 
 function create() {
-  var level = LEVEL.ONE;
+  var level = utils.retrieve('level');
   var image = game.make.image(0, 0, 'background');
   var win = game.add.audio('finish');
+
+  if (!level) {
+    level = LEVEL.ONE;
+  }
 
   utils.style('body { font-family: ' + FONT + '; }');
 

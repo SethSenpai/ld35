@@ -17,3 +17,15 @@ utils.style = function (s) {
   el.innerHTML = s;
   document.body.appendChild(el);
 };
+
+utils.store = function (key, json) {
+  localStorage[key] = JSON.stringify(json);
+};
+
+utils.retrieve = function (key) {
+  if (localStorage[key]) {
+    return JSON.parse(localStorage[key]);
+  } else {
+    return null;
+  }
+};
