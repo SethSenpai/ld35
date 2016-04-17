@@ -58,7 +58,8 @@ function create() {
   //shader for background
   filter = new Phaser.Filter(game, 1000, game.cache.getShader('bac_background'));
   filter.addToWorld(0, 0, 1280, 720);
- 
+  
+  //stuff for that one bloody bouncing molecule
   game.physics.startSystem(Phaser.Physics.P2JS);
   game.physics.p2.restitution = 0.8;
   molecule = game.add.physicsGroup(Phaser.Physics.P2JS);
@@ -68,6 +69,7 @@ function create() {
   thing.body.damping = 0;
   thing.body.angle = Math.floor(Math.random()*360);
   thing.body.thrust(6000);
+  
   
   var logoImg = game.add.image(WIDTH/2-500, 30, 'logo');
   
@@ -137,6 +139,12 @@ function playLevel(){
 
 function showCredits(){
 	//code here
+	popCredits.innerHTML = '<span class="title">Credits:</span><br><span style="font-size:24px;"><p>Sander "snedar" Dijkhuis</p><p>Pim "Seth-Senpai" Ostendorf</p><br><br><p>Online Tools used:</p><p>SFX: http://www.bfxr.net/</p><p> Shaders: http://glslsandbox.com/</p><p> Music: http://www.purple-planet.com</p>';
+	popCredits.style.display = 'block';
+      popCredits.onclick = function () {
+      popCredits.style.display = 'none';
+      };
+
 }
 
 function loadLevel(){
