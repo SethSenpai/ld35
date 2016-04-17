@@ -26,11 +26,14 @@ var scoreBoardTextLarge;
 var scoreBoardText;
 var styleBoard;
 var styleBoardLarge;
+var filter;
 
 function preload() { 
   game.load.image('water', 'sprites/water_molecule_small.png');
   game.load.image('recepticle', 'sprites/recepticle_small.png');
   game.load.image('background', 'sprites/background.png');
+  
+  game.load.shader('bac_background', 'shader/background.frag');
   
   game.load.audio('music', 'sfx/bg_music.ogg');
   game.load.audio('finish', 'sfx/finish.wav');
@@ -45,23 +48,26 @@ function preload() {
 
 function create() {
   var level = LEVEL.ONE;
-  var image = game.make.image(0, 0, 'background');
+  //var image = game.make.image(0, 0, 'background');
   var win = game.add.audio('finish');
-
-  game.physics.startSystem(Phaser.Physics.P2JS);
-  game.physics.p2.restitution = 0.8;
-
-  stage = game.add.group();
-
-  stage.add(image);
-
-  Membrane.create(game, stage, level);
   
   //create timer
   timer = game.time.create(false);
   //start time. can be put somewhere else later when the level starts etc
   timer.start();
   
+  //shader for background
+  filter = new Phaser.Filter(game, 1000, game.cache.getShader('bac_background'));
+  filter.addToWorld(0, 0, 1280, 720);
+
+  game.physics.startSystem(Phaser.Physics.P2JS);
+  game.physics.p2.restitution = 0.8;
+
+  stage = game.add.group();
+  //stage.add(image);
+
+  Membrane.create(game, stage, level);
+    
   //score display
   bar = game.add.graphics();
   styleBoardLarge = {font: "36px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
@@ -119,6 +125,9 @@ function create() {
 
 function update() {
 	
+  //upate filter for background dynamics
+   filter.update();
+   
   // Update scoreboard
   if(won != true){
   scoreText.text = "Bounces: " + bounceCount;
