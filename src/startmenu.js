@@ -132,6 +132,18 @@ function loadLevel(){
 	  //load premade levels into a dropdown box
 	  var select = document.getElementById("slvl");
 	  var options = Object.keys(LEVEL);
+
+	  select.addEventListener('click', function (e) {
+	    e.stopPropagation();
+	  });
+	  select.addEventListener('change', function () {
+	    if (options.indexOf(select.value) != -1) {
+	      utils.store('level', null);
+	      utils.store('bundled', select.value);
+	      playLevel();
+	    }
+	  });
+
 	  for(var i = 0; i < options.length; i++) 
 	  {
       var opt = options[i];
