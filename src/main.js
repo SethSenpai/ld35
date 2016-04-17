@@ -109,7 +109,7 @@ function update() {
   // Update scoreboard
   if(won != true){
   scoreText.text = "Bounces: " + bounceCount;
-  timeText.text = "Time: " + timer.seconds;
+  timeText.text = "Time: " + (timer.ms/1000).toFixed(2);
   }
   else
   {
