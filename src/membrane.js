@@ -122,8 +122,21 @@ var Membrane = (function() {
         return res;
       }
 
+      function toggleEdit(b) {
+        var i = 0;
+        vertices.forEach(function (v) {
+          if (b || !level.vertices[i].fixed) {
+            v.input.enableDrag();
+          } else {
+            v.input.disableDrag();
+          }
+          i++;
+        });
+      }
+
       return {
-        json: json
+        json: json,
+        toggleEdit: toggleEdit
       };
     }
   };

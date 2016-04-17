@@ -91,7 +91,7 @@
         startPosition = { x: player.x, y: player.y };
       });
 
-
+      membrane.toggleEdit(true);
     }
 
     function stop() {
@@ -101,6 +101,8 @@
 
       player.body.static = false;
       player.inputEnabled = false;
+
+      membrane.toggleEdit(false);
     }
 
     function jsonify() {
