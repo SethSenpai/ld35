@@ -32,6 +32,8 @@ var filter;
 var sfx;
 var thing;
 var spaceKey;
+var explainText;
+var style
 
 function preload() { 
   game.load.image('water', 'sprites/water_molecule_small.png');
@@ -72,6 +74,11 @@ function create() {
   bar = game.add.graphics();
   styleBoardLarge = {font: "86px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
   styleBoard = {font: "34px bebaslight", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+  style = {font: "24px bebaslight", fill: "#fff"};
+  
+  //in menu tutorials
+  explainText = game.add.text(0,0, " ", style);
+  explainText.setTextBounds(24,660,200,200);
 
   // Add music
   var music = game.add.audio('music');
@@ -84,10 +91,13 @@ function create() {
   // Make buttons
   var buttonNext = game.add.button(WIDTH/2-500,100 , "playButton" , playLevel , this, 1 , 0 , 2 );
   buttonNext.onInputOver.add(overButton, this);
+  buttonNext.onInputOut.add(outButton, this);
   var buttonCredits = game.add.button(WIDTH/2-500,300 , "creditsButton" , showCredits , this, 1 , 0 , 2 );
   buttonCredits.onInputOver.add(overButton, this);
+  buttonCredits.onInputOut.add(outButton, this);
   var buttonLoad = game.add.button(WIDTH/2-500,200 , "loadButton" , loadLevel , this, 1 , 0 , 2 );
   buttonLoad.onInputOver.add(overButton, this);
+  buttonLoad.onInputOut.add(outButton, this);
   
 }
  
@@ -97,9 +107,27 @@ function update() {
    filter.update();
 
 }
-function overButton(){
+function overButton(switchValue){
 	sfx.play();
-	
+	switch(switchValue.key)
+	{
+		case "playButton":
+			console.log("trigger");
+			explainText.text = "This button brings you back into the game, it always loads the level you last played. To load a different level use the load button below!";
+		break;
+		
+		case "creditsButton":
+			explainText.text = "Look at our pretty names! <3";
+		break;
+		
+		case "loadButton":
+			explainText.text = "With this button you can load in the premade levels or load in a level that you made yourself.";
+		break;
+	}
+}
+
+function outButton(){
+	explainText.text = " ";
 }
 
 function playLevel(){
@@ -127,7 +155,7 @@ function loadLevel(){
       }*/
 	  
 	  
-      popup.innerHTML = '<textarea cols=80 rows=25></textarea><p style="font-size:24px">Paste your level-data and press ENTER!<br><select id="slvl"><option>Select a level</option></select>';
+      popup.innerHTML = '<textarea cols=80 rows=25></textarea><p style="font-size:24px">Paste your level-data and press ENTER!<br> You can also select a premade level from the list: <select id="slvl"><option>Select a level</option></select>';
 	  
 	  //load premade levels into a dropdown box
 	  var select = document.getElementById("slvl");
