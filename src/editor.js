@@ -12,8 +12,14 @@
     editing: false
   };
 
+  var jsonifyImpl;
+
   function preload(game) {
     game.load.spritesheet('editor-button', 'sprites/editor_button.png', BUTTON_WIDTH, BUTTON_HEIGHT);
+  }
+
+  function jsonify() {
+    return jsonifyImpl();
   }
 
   function create(game, stage) {
@@ -87,6 +93,8 @@
     function start() {
       scale(0.75);
 
+      state.editing = true;
+
       chrome.visible = true;
 
       border.visible = true;
@@ -110,6 +118,8 @@
     function stop() {
       scale(1);
 
+      state.editing = false;
+
       chrome.visible = false;
 
       border.visible = false;
@@ -123,7 +133,7 @@
     }
 
     // Create a JSON object that represents the level
-    function jsonify() {
+    jsonifyImpl = function () {
       var level = {
         start: { x: player.x, y: player.y },
         end: { x: recepticle.x, y: recepticle.y },
@@ -185,11 +195,14 @@
     function save() {
       utils.store('level', jsonify());
     }
+
+    start();
   }
 
   return {
     state: state,
     preload: preload,
-    create: create
+    create: create,
+    jsonify: jsonify
   };
 }
