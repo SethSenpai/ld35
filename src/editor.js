@@ -3,7 +3,11 @@
   var BUTTON_HEIGHT = 52;
   var PADDING = 12;
   var SPACING = 6;
+
+  // Border around display
   var border;
+
+  // Level editor state, may be accessed from other files
   var state = {
     editing: false
   };
@@ -14,6 +18,8 @@
 
   function create(game, stage) {
     var edit = game.input.keyboard.addKey(Phaser.Keyboard.E);
+
+    // The chrome group contains all editor widgets
     var chrome = game.add.group();
 
     chrome.visible = false;
@@ -35,6 +41,7 @@
       }
     });
 
+    // Add level management buttons
     (function () {
       var x = PADDING;
       var y = HEIGHT - BUTTON_HEIGHT - PADDING;
@@ -47,7 +54,7 @@
       button(x, y, 'Clear Level', clear);
     })();
 
-    // Create a button
+    // Helper function to create a button
     function button(x, y, label, action) {
       var g = game.make.group();
       var b = game.make.button(0, 0, 'editor-button', action, this, 2, 1, 0);
@@ -76,6 +83,7 @@
       }
     }
 
+    // Called when editing is started
     function start() {
       scale(0.75);
 
@@ -94,6 +102,7 @@
       membrane.toggleEdit(true);
     }
 
+    // Called when editing is stopped
     function stop() {
       scale(1);
 
@@ -105,6 +114,7 @@
       membrane.toggleEdit(false);
     }
 
+    // Create a JSON object that represents the level
     function jsonify() {
       var level = {
         start: { x: player.x, y: player.y },
