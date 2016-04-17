@@ -54,6 +54,9 @@ var Membrane = (function() {
       //   1: [[edge1, 0], ...] }
       // Numbers are vertex indices, edges are Phaser.Graphics
       var index = {};
+
+      // Which edge had the last bounce?
+      var lastBounce;
       
       // Create vertex sprites
       level.vertices.forEach(function(v, i) {
@@ -79,28 +82,31 @@ var Membrane = (function() {
       });
       
       // Create edges and set up index
-      for (var i = 0; i < vertices.length; i++) {
+      utils.range(vertices.length).forEach(function (i) {
         var j = (i + 1) % vertices.length;
         var first = vertices.getAt(i);
         var second = vertices.getAt(j);
         var e = game.make.graphics();
-        
+
         edges.addChild(e);
         game.physics.p2.enable(e, DEBUG);
         e.body.static = true;
         e.body.onBeginContact.add(function () {
-          sfx.bounce.play();
-		  bounceCount ++;
+          if (lastBounce != i) {
+            lastBounce = i;
+            sfx.bounce.play();
+            bounceCount++;
+          }
         });
         e.alpha = 0.5;
-        
+
         index[i] = index[i] || [];
         index[i].push([e, j]);
         index[j] = index[j] || [];
         index[j].push([e, i]);
-        
+
         updateEdge(e, first, second);
-      }
+      });
     }
   };
 })();
