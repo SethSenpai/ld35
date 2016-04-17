@@ -25,8 +25,6 @@ var scoreBoardText;
 var styleBoard;
 var styleBoardLarge;
 var filter;
-var gameStarted = false;
-var spaceKey;
 
 function preload() { 
   game.load.image('water', 'sprites/water_molecule_small.png');
@@ -50,7 +48,7 @@ function preload() {
 }
 
 function create() {
-  var level = utils.retrieve('level');
+  var level = loadCurrentLevel();
   var win = game.add.audio('finish');
   
   //create timer
@@ -64,10 +62,6 @@ function create() {
 
   game.physics.startSystem(Phaser.Physics.P2JS);
   game.physics.p2.restitution = 0.8;
-
-  if (!level) {
-    level = LEVEL.ONE;
-  }
 
   startPosition = level.start;
 
@@ -88,7 +82,8 @@ function create() {
   
   //create timer
   timer = game.time.create(false);
-  
+  //start time. can be put somewhere else later when the level starts etc
+  timer.start();
   
   //score display
   bar = game.add.graphics();
@@ -137,10 +132,6 @@ function create() {
   });
 
   editor.create(game, stage);
-  
-  //set spacebar as startkey
-  spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
 }
 
 function update() {
@@ -165,31 +156,39 @@ function update() {
 	  scoreBoardTextLarge.setTextBounds(0,210,WIDTH,150);
 	  var totalscore = ((bounceCount*20)+timer.ms/1000).toFixed(2);
 	  scoreBoardText = game.add.text(0,0,"Score: " + totalscore + "\nBounces: " + bounceCount + " * 20 + Time: " + (timer.ms/1000).toFixed(2), styleBoard); // "\n Bounces: " + bounceCount + "* 20 + Time: " + finishtime
-	  scoreBoardText.setTextBounds(0,360,WIDTH,150);
-	  var buttonNext = game.add.button(WIDTH-240,420 , "nextButton" , loadNextLevel , this, 1 , 0 , 2 );
+	  scoreBoardText.setTextBounds(0, 360, WIDTH, 150);
+	  if (nextLevel()) {
+	    var buttonNext = game.add.button(WIDTH - 240, 420, "nextButton", loadNextLevel, this, 1, 0, 2);
+	  }
 	  var buttonReplay = game.add.button(10, 420, "replayButton", reloadLevel, this, 1, 0, 2);
 	  var buttonMenu = game.add.button(10, 220, "menuButton", loadMenu, this, 1, 0, 2);
 	}
   }
   
-  if(spaceKey.isDown){
-	  gameStarted = true;
-	  //start time. can be put somewhere else later when the level starts etc
-	  timer.start();
-  }
   // Accelerate player to recepticle
-  // check if player pressed space first to allow for thinking time
-  if(gameStarted == true){
   var factor = 60;
   var angle = Math.atan2(recepticle.y - player.y, recepticle.x - player.x);
   player.body.rotation = angle + game.math.degToRad(90);
   player.body.force.x = Math.cos(angle) * factor;
   player.body.force.y = Math.sin(angle) * factor;
-  }
+}
+
+function nextLevel() {
+  if (utils.retrieve('level')) return false;
+
+  var current = utils.retrieve('bundled');
+  var names = Object.keys(LEVEL);
+  var index = names.indexOf(current);
+
+  if (index < names.length - 1)
+    return names[index + 1];
+  else
+    return false;
 }
 
 function loadNextLevel() {
-  console.log('next level');
+  utils.store('bundled', nextLevel());
+  location.reload();
 }
 
 function reloadLevel() {
@@ -198,4 +197,28 @@ function reloadLevel() {
 
 function loadMenu() {
   location.replace("index.html");
+}
+
+function loadCurrentLevel() {
+  var level = utils.retrieve('level');
+  var bundled;
+
+  if (!level) {
+    bundled = utils.retrieve('bundled');
+
+    if (!bundled) {
+      bundled = Object.keys(LEVEL)[0];
+      utils.store('bundled', bundled);
+    }
+
+    level = LEVEL[bundled];
+  }
+
+  return level;
+}
+
+function reset() {
+  utils.store('level', null);
+  utils.store('bundled', null);
+  location.reload();
 }
