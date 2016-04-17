@@ -48,6 +48,7 @@ function preload() {
   game.load.spritesheet('playButton', 'sprites/play_button.png' , 230 , 86);
   game.load.spritesheet('creditsButton' , 'sprites/credits_button.png' , 333 , 86);
   game.load.spritesheet('loadButton' , 'sprites/load_button.png' , 240 , 86);
+  game.load.image('logo', 'sprites/via_morpha_logo.png')
 
 }
 
@@ -68,7 +69,7 @@ function create() {
   thing.body.angle = Math.floor(Math.random()*360);
   thing.body.thrust(6000);
   
-  
+  var logoImg = game.add.image(WIDTH/2-500, 30, 'logo');
   
   //credits things
   bar = game.add.graphics();
@@ -77,8 +78,8 @@ function create() {
   style = {font: "24px bebaslight", fill: "#fff"};
   
   //in menu tutorials
-  explainText = game.add.text(0,0, " ", style);
-  explainText.setTextBounds(24,660,200,200);
+  explainText = game.add.text(0,0, "This game has several useful hotkeys: M -> Return to menu, R -> Reload level, E -> Edit Mode. \nWhen editing hold D to delete a node and Press F to fix a node. Clicking on a line adds an extra node.  ", style);
+  explainText.setTextBounds(WIDTH/2-500,660,200,200);
 
   // Add music
   var music = game.add.audio('music');
@@ -89,13 +90,13 @@ function create() {
   sfx.volume = 1.0;
   
   // Make buttons
-  var buttonNext = game.add.button(WIDTH/2-500,100 , "playButton" , playLevel , this, 1 , 0 , 2 );
+  var buttonNext = game.add.button(WIDTH/2-500,350 , "playButton" , playLevel , this, 1 , 0 , 2 );
   buttonNext.onInputOver.add(overButton, this);
   buttonNext.onInputOut.add(outButton, this);
-  var buttonCredits = game.add.button(WIDTH/2-500,300 , "creditsButton" , showCredits , this, 1 , 0 , 2 );
+  var buttonCredits = game.add.button(WIDTH/2-500,550 , "creditsButton" , showCredits , this, 1 , 0 , 2 );
   buttonCredits.onInputOver.add(overButton, this);
   buttonCredits.onInputOut.add(outButton, this);
-  var buttonLoad = game.add.button(WIDTH/2-500,200 , "loadButton" , loadLevel , this, 1 , 0 , 2 );
+  var buttonLoad = game.add.button(WIDTH/2-500,450 , "loadButton" , loadLevel , this, 1 , 0 , 2 );
   buttonLoad.onInputOver.add(overButton, this);
   buttonLoad.onInputOut.add(outButton, this);
   
@@ -127,7 +128,7 @@ function overButton(switchValue){
 }
 
 function outButton(){
-	explainText.text = " ";
+	explainText.text = "This game has several useful hotkeys: M -> Return to menu,   R -> Reload level,   E -> Edit Mode. \nWhen editing hold D to delete a node and Press F to fix a node. Clicking on a line adds an extra node. ";
 }
 
 function playLevel(){
@@ -155,7 +156,7 @@ function loadLevel(){
       }*/
 	  
 	  
-      popup.innerHTML = '<textarea cols=80 rows=25></textarea><p style="font-size:24px">Paste your level-data and press ENTER!<br> You can also select a premade level from the list: <select id="slvl"><option>Select a level</option></select>';
+      popup.innerHTML = '<textarea cols=80 rows=25></textarea><p style="font-size:24px">Paste your level-data and press ENTER!<br> You can also select a premade level from the list: <select id="slvl"><option>> Select a level</option></select>';
 	  
 	  //load premade levels into a dropdown box
 	  var select = document.getElementById("slvl");
