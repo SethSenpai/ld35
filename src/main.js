@@ -130,6 +130,16 @@ function create() {
 
   //set spacebar as startkey
   spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+  // R for reload
+  game.input.keyboard.addKey(Phaser.Keyboard.R).onDown.add(function () {
+    location.reload();
+  });
+
+  // M for menu
+  game.input.keyboard.addKey(Phaser.Keyboard.M).onDown.add(function () {
+    location.replace('.');
+  });
 }
 
 function update() {
