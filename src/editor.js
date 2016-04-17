@@ -52,8 +52,8 @@
       var x = PADDING;
       var y = HEIGHT - BUTTON_HEIGHT - PADDING;
       button(x, y, 'Export Level…', showExportPopup);
-      x += BUTTON_WIDTH + SPACING;
-      button(x, y, 'Import Level…', showImportPopup);
+      //x += BUTTON_WIDTH + SPACING;
+      //button(x, y, 'Import Level…', showImportPopup);
       x += BUTTON_WIDTH + SPACING;
       button(x, y, 'Save Level', save);
       x += BUTTON_WIDTH + SPACING;
@@ -62,6 +62,8 @@
       button(x, y, 'Add Membrane', addMembrane);
       x += BUTTON_WIDTH + SPACING;
       button(x, y, 'Add repeller', addRepeller);
+      x += BUTTON_WIDTH + SPACING;
+      button(x, y, 'Add attractor', addAttractor);
     })();
 
     // Helper function to create a button
@@ -161,7 +163,8 @@
           m.toggleEdit(true);
           return j;
         }),
-        repellers: forces.repellers()
+        repellers: forces.repellers(),
+        attractors: forces.attractors()
       };
       return level;
     }
@@ -236,6 +239,16 @@
       var newLevel = jsonify();
       
       newLevel.repellers.push({ x: -40, y: -40 });
+
+      forces.remove();
+      forces = Forces.create(game, stage, newLevel);
+      forces.edit();
+    }
+
+    function addAttractor() {
+      var newLevel = jsonify();
+
+      newLevel.attractors.push({ x: -40, y: -40 });
 
       forces.remove();
       forces = Forces.create(game, stage, newLevel);

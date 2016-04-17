@@ -195,9 +195,17 @@ function update() {
     forces.repellers().forEach(function (r) {
       var factor = REPELLER_FORCE;
       var angle = Math.atan2(r.y - player.y, r.x - player.x);
-      player.body.rotation -= angle + game.math.degToRad(90);
+      //player.body.rotation -= angle + game.math.degToRad(90);
       player.body.force.x -= Math.cos(angle) * factor;
       player.body.force.y -= Math.sin(angle) * factor;
+    });
+
+    forces.attractors().forEach(function (r) {
+      var factor = ATTRACTOR_FORCE;
+      var angle = Math.atan2(r.y - player.y, r.x - player.x);
+      //player.body.rotation += angle + game.math.degToRad(90);
+      player.body.force.x += Math.cos(angle) * factor;
+      player.body.force.y += Math.sin(angle) * factor;
     });
   }
 }
