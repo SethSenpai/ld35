@@ -60,6 +60,8 @@
       button(x, y, 'Reset Level', clear);
       x += BUTTON_WIDTH + 4 * SPACING;
       button(x, y, 'Add Membrane', addMembrane);
+      x += BUTTON_WIDTH + SPACING;
+      button(x, y, 'Add repeller', addRepeller);
     })();
 
     // Helper function to create a button
@@ -124,6 +126,8 @@
       membranes.forEach(function (m) {
         m.toggleEdit(true);
       });
+
+      forces.edit();
     }
 
     // Called when editing is stopped
@@ -142,6 +146,8 @@
       membranes.forEach(function (m) {
         m.toggleEdit(false);
       });
+
+      forces.unedit();
     }
 
     // Create a JSON object that represents the level
@@ -154,7 +160,8 @@
           var j = m.json();
           m.toggleEdit(true);
           return j;
-        })
+        }),
+        repellers: forces.repellers()
       };
       return level;
     }
@@ -223,6 +230,16 @@
       var nm = Membrane.create(game, stage, newLevel, newLevel.membranes.length - 1);
       nm.toggleEdit(true);
       membranes.push(nm);
+    }
+
+    function addRepeller() {
+      var newLevel = jsonify();
+      
+      newLevel.repellers.push({ x: -40, y: -40 });
+
+      forces.remove();
+      forces = Forces.create(game, stage, newLevel);
+      forces.edit();
     }
   }
 

@@ -14,6 +14,7 @@ var editor = Editor();
 var membranes = [];
 var startPosition;
 var membraneGroup;
+var forces;
 
 var won = false;
 var bounceCount = 0;
@@ -47,6 +48,7 @@ function preload() {
   
   Membrane.preload(game);
   editor.preload(game);
+  Forces.preload(game);
 }
 
 function create() {
@@ -79,6 +81,8 @@ function create() {
   level.membranes.forEach(function (m, i) {
     membranes.push(Membrane.create(game, stage, level, i));
   });
+
+  forces = Forces.create(game, stage, level);
   
   //score display
   bar = game.add.graphics();
@@ -181,12 +185,20 @@ function update() {
   
   // Accelerate player to recepticle
   // check if player pressed space first to allow for thinking time
-  var factor = 60;
+  var factor = RECEPTICLE_FORCE;
   if(gameStarted == true){
-  var angle = Math.atan2(recepticle.y - player.y, recepticle.x - player.x);
-  player.body.rotation = angle + game.math.degToRad(90);
-  player.body.force.x = Math.cos(angle) * factor;
-  player.body.force.y = Math.sin(angle) * factor;
+    var angle = Math.atan2(recepticle.y - player.y, recepticle.x - player.x);
+    player.body.rotation = angle + game.math.degToRad(90);
+    player.body.force.x = Math.cos(angle) * factor;
+    player.body.force.y = Math.sin(angle) * factor;
+
+    forces.repellers().forEach(function (r) {
+      var factor = REPELLER_FORCE;
+      var angle = Math.atan2(r.y - player.y, r.x - player.x);
+      player.body.rotation -= angle + game.math.degToRad(90);
+      player.body.force.x -= Math.cos(angle) * factor;
+      player.body.force.y -= Math.sin(angle) * factor;
+    });
   }
 }
 
