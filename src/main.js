@@ -1,10 +1,5 @@
 /// <reference path="../third-party/phaser.d.ts"/>
 
-var DEBUG = false;
-var WIDTH = 1280;
-var HEIGHT = 720;
-var FONT = 'bebas';
-
 var game = new Phaser.Game(WIDTH, HEIGHT, Phaser.WEBGL, '', {
   preload: preload,
   create: create,
@@ -45,8 +40,6 @@ function preload() {
   game.load.physics('recepticle-data', 'sprites/recepticle_small.json');
   
   game.load.spritesheet('nextButton', 'sprites/next_button.png' , 230 , 86);
-  game.load.spritesheet('replayButton' , 'sprites/replay_button.png' , 314 , 86);
-  game.load.spritesheet('menuButton' , 'sprites/menu_button.png' , 255 , 86);
   
   Membrane.preload(game);
   editor.preload(game);
@@ -96,8 +89,8 @@ function create() {
   
   //score display
   bar = game.add.graphics();
-  styleBoardLarge = {font: "86px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
-  styleBoard = {font: "34px bebaslight", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+  styleBoardLarge = {font: "36px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+  styleBoard = {font: "24px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
   
   //Text display
   var style = {font: "24px bebaslight", fill: "#fff"};
@@ -167,8 +160,6 @@ function update() {
 	  scoreBoardText = game.add.text(0,0,"Score: " + totalscore + "\nBounces: " + bounceCount + " * 20 + Time: " + (timer.ms/1000).toFixed(2), styleBoard); // "\n Bounces: " + bounceCount + "* 20 + Time: " + finishtime
 	  scoreBoardText.setTextBounds(0,360,WIDTH,150);
 	  var buttonNext = game.add.button(WIDTH-240,420 , "nextButton" , loadNextLevel , this, 1 , 0 , 2 );
-	  var buttonReplay = game.add.button(10 , 420 , "replayButton" , reloadLevel, this, 1 , 0 ,2 );
-	  var buttonMenu = game.add.button(10 , 220 , "menuButton" , loadMenu, this, 1 , 0 ,2 );
 	  
 	}
   }
@@ -183,12 +174,4 @@ function update() {
 
 function loadNextLevel() {
   console.log('next level');
-}
-
-function reloadLevel(){
-	location.reload();
-}
-
-function loadMenu(){
-	location.replace("index.html");
 }
