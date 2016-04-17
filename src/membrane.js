@@ -56,9 +56,8 @@ var Membrane = (function() {
       newMembrane = Membrane.create(game, stage, newLevel, membraneIndex);
       newMembrane.toggleEdit(true);
 
-      membrane.remove();
-
-      membranes.splice(membraneIndex, 1, newMembrane);
+      removeMembrane(game, stage, level, membraneIndex);
+      membranes.push(newMembrane);
     } else {
       removeMembrane(game, stage, level, membraneIndex);
     }
@@ -139,12 +138,7 @@ var Membrane = (function() {
           if (editor.state.editing) {
             transformVertex(s);
           }
-          //if (!window.event) return;
-          //console.log(s.x, s.y);
 
-          //s.x = event.clientX;
-          //s.y = event.clientY;
-          //console.log('drag', window.event);
           index[j].forEach(function (link) {
             updateEdge(link[0], s, vertices.getAt(link[1]));
           });
@@ -243,6 +237,7 @@ var Membrane = (function() {
         edges.forEach(function (edge) {
           edge.body.clearShapes();
           edge.inputEnabled = false;
+          game.physics.p2.removeBody(edge.body);
         });
         membraneGroup.removeChild(vertices);
         membraneGroup.removeChild(edges);

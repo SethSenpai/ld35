@@ -1,4 +1,4 @@
-﻿var DEBUG = false;
+﻿var DEBUG = true;
 var WIDTH = 1280;
 var HEIGHT = 720;
 var FONT = 'bebas';
