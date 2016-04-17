@@ -39,7 +39,8 @@ function preload() {
   game.load.physics('water-data', 'sprites/water_molecule_small.json');
   game.load.physics('recepticle-data', 'sprites/recepticle_small.json');
   
-  game.load.spritesheet('nextButton', 'sprites/next_button.png' , 230 , 86);
+  game.load.spritesheet('nextButton', 'sprites/next_button.png', 230, 86);
+  game.load.spritesheet('replayButton', 'sprites/replay_button.png', 314, 86);
   
   Membrane.preload(game);
   editor.preload(game);
@@ -160,7 +161,7 @@ function update() {
 	  scoreBoardText = game.add.text(0,0,"Score: " + totalscore + "\nBounces: " + bounceCount + " * 20 + Time: " + (timer.ms/1000).toFixed(2), styleBoard); // "\n Bounces: " + bounceCount + "* 20 + Time: " + finishtime
 	  scoreBoardText.setTextBounds(0,360,WIDTH,150);
 	  var buttonNext = game.add.button(WIDTH-240,420 , "nextButton" , loadNextLevel , this, 1 , 0 , 2 );
-	  
+	  var buttonReplay = game.add.button(10, 420, "replayButton", reloadLevel, this, 1, 0, 2);
 	}
   }
   
@@ -174,4 +175,8 @@ function update() {
 
 function loadNextLevel() {
   console.log('next level');
+}
+
+function reloadLevel() {
+  location.reload();
 }
