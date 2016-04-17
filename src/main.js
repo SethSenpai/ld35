@@ -28,11 +28,14 @@ var scoreBoardTextLarge;
 var scoreBoardText;
 var styleBoard;
 var styleBoardLarge;
+var filter;
 
 function preload() { 
   game.load.image('water', 'sprites/water_molecule_small.png');
   game.load.image('recepticle', 'sprites/recepticle_small.png');
   game.load.image('background', 'sprites/background.png');
+  
+  game.load.shader('bac_background', 'shader/background.frag');
   
   game.load.audio('music', 'sfx/bg_music.ogg');
   game.load.audio('finish', 'sfx/finish.wav');
@@ -47,9 +50,21 @@ function preload() {
 }
 
 function create() {
-  var level = utils.retrieve('level');
-  var image = game.make.image(0, 0, 'background');
+  var level = LEVEL.ONE;
+  //var image = game.make.image(0, 0, 'background');
   var win = game.add.audio('finish');
+  
+  //create timer
+  timer = game.time.create(false);
+  //start time. can be put somewhere else later when the level starts etc
+  timer.start();
+  
+  //shader for background
+  filter = new Phaser.Filter(game, 1000, game.cache.getShader('bac_background'));
+  filter.addToWorld(0, 0, 1280, 720);
+
+  game.physics.startSystem(Phaser.Physics.P2JS);
+  game.physics.p2.restitution = 0.8;
 
   if (!level) {
     level = LEVEL.ONE;
@@ -65,6 +80,7 @@ function create() {
   game.physics.p2.restitution = 0.8;
 
   stage.add(image);
+  //stage.add(image);
 
   membrane = Membrane.create(game, stage, level);
   
@@ -124,6 +140,9 @@ function create() {
 
 function update() {
 	
+  //upate filter for background dynamics
+   filter.update();
+   
   // Update scoreboard
   if(won != true){
   scoreText.text = "Bounces: " + bounceCount;
