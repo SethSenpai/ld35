@@ -88,10 +88,19 @@ var Membrane = (function() {
     v.x = mx / EDIT_SCALE - 0.5 * WIDTH * (1 - EDIT_SCALE) / EDIT_SCALE;
     v.y = my / EDIT_SCALE - 0.5 * HEIGHT * (1 - EDIT_SCALE) / EDIT_SCALE;
   }
+
+  function toggleFixedDisplay(v, b) {
+    if (b) {
+      v.loadTexture('vertex-fixed', 0);
+    } else {
+      v.loadTexture('vertex', 0);
+    }
+  }
   
   return {
     preload: function(game) {
       game.load.image('vertex', 'sprites/connector_small.png');
+      game.load.image('vertex-fixed', 'sprites/connector_purple.png');
       game.load.audio('membrane-down', 'sfx/press_down.wav');
       game.load.audio('membrane-up', 'sfx/press_up.wav');
       game.load.audio('bounce-hurt', 'sfx/bounce_hurt.wav');
@@ -148,9 +157,9 @@ var Membrane = (function() {
             if (game.input.keyboard.isDown(Phaser.Keyboard.F)) {
               v.fixed = !v.fixed;
               if (v.fixed) {
-                s.alpha = 0.25;
+                toggleFixedDisplay(s, true);
               } else {
-                s.alpha = 1;
+                toggleFixedDisplay(s, false);
               }
             } else if (game.input.keyboard.isDown(Phaser.Keyboard.D)) {
               removeVertex(game, stage, level, i, j);
@@ -161,7 +170,7 @@ var Membrane = (function() {
         if (!v.fixed) {
           s.input.enableDrag();
         } else {
-          s.alpha = 0.25;
+          toggleFixedDisplay(s, true);
         }
       });
       
