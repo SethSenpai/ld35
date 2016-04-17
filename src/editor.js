@@ -38,7 +38,7 @@
     (function () {
       var x = PADDING;
       var y = HEIGHT - BUTTON_HEIGHT - PADDING;
-      button(x, y, 'Export Level…', export);
+      button(x, y, 'Export Level…', showExportPopup);
       x += BUTTON_WIDTH + SPACING;
       button(x, y, 'Load Level…', load);
     })();
@@ -82,7 +82,7 @@
       chrome.visible = false;
     }
 
-    function export() {
+    function showExportPopup() {
       var level = {
         start: { x: player.x, y: player.y },
         end: { x: recepticle.x, y: recepticle.y },
