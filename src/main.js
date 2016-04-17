@@ -61,6 +61,8 @@ function create() {
   var image = game.make.image(0, 0, 'background');
   var win = game.add.audio('finish');
 
+  utils.style('body { font-family: ' + FONT + '; }');
+
   stage = game.add.group();
 
   game.physics.startSystem(Phaser.Physics.P2JS);

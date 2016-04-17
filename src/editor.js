@@ -90,7 +90,9 @@
       };
       var s = JSON.stringify(level);
 
-      popup.innerHTML = '<textarea cols=80 rows=25 autofocus readonly>' + s + '</textarea>';
+      popup.innerHTML =
+        '<textarea cols=80 rows=25 autofocus readonly>' + s + '</textarea>'
+        + '<p>ctrl-a ctrl-c';
       popup.childNodes[0].select();
       popup.style.display = 'block';
       popup.onclick = function () {

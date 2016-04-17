@@ -11,3 +11,9 @@ utils.range = function (n) {
   }
   return res;
 };
+
+utils.style = function (s) {
+  var el = document.createElement('style');
+  el.innerHTML = s;
+  document.body.appendChild(el);
+};
