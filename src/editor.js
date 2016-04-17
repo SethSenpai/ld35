@@ -137,8 +137,11 @@
       var level = {
         start: { x: player.x, y: player.y },
         end: { x: recepticle.x, y: recepticle.y },
-        membranes: membranes.map(function(m) {
-          return m.json();
+        membranes: membranes.map(function (m) {
+          m.toggleEdit(false);
+          var j = m.json();
+          m.toggleEdit(true);
+          return j;
         })
       };
       return level;

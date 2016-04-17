@@ -40,8 +40,45 @@ var Membrane = (function() {
     newMembrane = Membrane.create(game, stage, newLevel, membraneIndex);
     newMembrane.toggleEdit(true);
     
-    membranes[membraneIndex].remove();
+    membrane.remove();
     membranes.splice(membraneIndex, 1, newMembrane);
+  }
+
+  function removeVertex(game, stage, level, membraneIndex, vertex) {
+    var membrane = membranes[membraneIndex];
+    var newLevel;
+    var newMembrane;
+
+    if (membrane.vertices.length > 2) {
+      newLevel = editor.jsonify();
+      newLevel.membranes[membraneIndex].vertices.splice(vertex, 1);
+
+      newMembrane = Membrane.create(game, stage, newLevel, membraneIndex);
+      newMembrane.toggleEdit(true);
+
+      membrane.remove();
+
+      membranes.splice(membraneIndex, 1, newMembrane);
+    } else {
+      removeMembrane(game, stage, level, membraneIndex);
+    }
+  }
+
+  function removeMembrane(game, stage, level, membraneIndex) {
+    var newLevel = editor.jsonify();
+
+    newLevel.membranes.splice(membraneIndex, 1);
+
+    membranes.forEach(function (m) {
+      m.remove();
+    });
+    membranes.splice(0, membranes.length);
+
+    newLevel.membranes.forEach(function (m, i) {
+      var nm = Membrane.create(game, stage, newLevel, i);
+      nm.toggleEdit(true);
+      membranes.push(nm);
+    });
   }
   
   return {
@@ -78,7 +115,7 @@ var Membrane = (function() {
       var lastBounce;
       
       // Create vertex sprites
-      level.membranes[i].vertices.forEach(function(v, i) {
+      level.membranes[i].vertices.forEach(function(v, j) {
         var s = vertices.create(v.x, v.y, 'vertex');
         s.anchor.set(0.5);
         
@@ -90,13 +127,29 @@ var Membrane = (function() {
           sfx.up.play();
         });
         s.events.onDragUpdate.add(function (sprite, pointer, dragX, dragY, snapPoint) {
-          index[i].forEach(function (link) {
+          index[j].forEach(function (link) {
             updateEdge(link[0], s, vertices.getAt(link[1]));
           });
+        });
+        s.events.onInputDown.add(function () {
+          if (editor.state.editing) {
+            if (game.input.keyboard.isDown(Phaser.Keyboard.F)) {
+              v.fixed = !v.fixed;
+              if (v.fixed) {
+                s.alpha = 0.25;
+              } else {
+                s.alpha = 1;
+              }
+            } else if (game.input.keyboard.isDown(Phaser.Keyboard.D)) {
+              removeVertex(game, stage, level, i, j);
+            }
+          }
         });
 
         if (!v.fixed) {
           s.input.enableDrag();
+        } else {
+          s.alpha = 0.25;
         }
       });
       
