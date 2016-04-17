@@ -112,8 +112,35 @@ function showCredits(){
 
 function loadLevel(){
 	 var area;
-
-      popup.innerHTML = '<textarea cols=80 rows=25></textarea><p style="font-size:24px">Paste your level-data and press ENTER!';
+	  
+	 /* dropdown.innerHTML = '<select id="slvl"><option>Select a level</option></select>';
+	  dropdown.style.display = 'block';
+	  var select = document.getElementById("slvl");
+	  var options = Object.keys(LEVEL);
+	  for(var i = 0; i < options.length; i++) 
+	  {
+      var opt = options[i];
+      var el = document.createElement("option");
+      el.textContent = opt;
+      dropdown.value = opt;
+      select.appendChild(el);
+      }*/
+	  
+	  
+      popup.innerHTML = '<textarea cols=80 rows=25></textarea><p style="font-size:24px">Paste your level-data and press ENTER!<br><select id="slvl"><option>Select a level</option></select>';
+	  
+	  //load premade levels into a dropdown box
+	  var select = document.getElementById("slvl");
+	  var options = Object.keys(LEVEL);
+	  for(var i = 0; i < options.length; i++) 
+	  {
+      var opt = options[i];
+      var el = document.createElement("option");
+      el.textContent = opt;
+      el.value = opt;
+      select.appendChild(el);
+	  }
+	  
       popup.style.display = 'block';
       popup.onclick = function () {
       popup.style.display = 'none';
