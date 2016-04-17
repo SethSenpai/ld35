@@ -4,3 +4,4 @@ var HEIGHT = 720;
 var FONT = 'bebas';
 var EDIT_SCALE = 0.75;
 var COLOR_PURPLE = 0x7e00ff;
+var COLOR_DIM_BLUE = 0x008080;

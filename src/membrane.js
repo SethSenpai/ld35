@@ -20,7 +20,7 @@ var Membrane = (function() {
     if (v1.input.draggable || v2.input.draggable) {
       e.beginFill(0xffffff);
     } else {
-      e.beginFill(COLOR_PURPLE);
+      e.beginFill(COLOR_DIM_BLUE);
     }
     e.drawRect(- length / 2, - size / 2, length, size);
     e.endFill();
@@ -104,7 +104,7 @@ var Membrane = (function() {
   return {
     preload: function(game) {
       game.load.image('vertex', 'sprites/connector_small.png');
-      game.load.image('vertex-fixed', 'sprites/connector_purple.png');
+      game.load.image('vertex-fixed', 'sprites/connector_blue_dim.png');
       game.load.audio('membrane-down', 'sfx/press_down.wav');
       game.load.audio('membrane-up', 'sfx/press_up.wav');
       game.load.audio('bounce-hurt', 'sfx/bounce_hurt.wav');
