@@ -51,7 +51,6 @@ function preload() {
 
 function create() {
   var level = LEVEL.ONE;
-  //var image = game.make.image(0, 0, 'background');
   var win = game.add.audio('finish');
   
   //create timer
@@ -78,9 +77,6 @@ function create() {
 
   game.physics.startSystem(Phaser.Physics.P2JS);
   game.physics.p2.restitution = 0.8;
-
-  stage.add(image);
-  //stage.add(image);
 
   membrane = Membrane.create(game, stage, level);
   
