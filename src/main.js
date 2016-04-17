@@ -154,3 +154,7 @@ function update() {
   player.body.force.x = Math.cos(angle) * factor;
   player.body.force.y = Math.sin(angle) * factor;
 }
+
+function loadNextLevel() {
+  console.log('next level');
+}
