@@ -12,8 +12,14 @@
     editing: false
   };
 
+  var jsonifyImpl;
+
   function preload(game) {
     game.load.spritesheet('editor-button', 'sprites/editor_button.png', BUTTON_WIDTH, BUTTON_HEIGHT);
+  }
+
+  function jsonify() {
+    return jsonifyImpl();
   }
 
   function create(game, stage) {
@@ -51,7 +57,9 @@
       x += BUTTON_WIDTH + SPACING;
       button(x, y, 'Save Level', save);
       x += BUTTON_WIDTH + SPACING;
-      button(x, y, 'Clear Level', clear);
+      button(x, y, 'Reset Level', clear);
+      x += BUTTON_WIDTH + 4 * SPACING;
+      button(x, y, 'Add Membrane', addMembrane);
     })();
 
     // Helper function to create a button
@@ -85,7 +93,9 @@
 
     // Called when editing is started
     function start() {
-      scale(0.75);
+      scale(EDIT_SCALE);
+
+      state.editing = true;
 
       chrome.visible = true;
 
@@ -95,10 +105,20 @@
       player.body.reset(startPosition.x, startPosition.y, 0, 0);
       player.inputEnabled = true;
       player.input.enableDrag();
-      player.events.onDragUpdate.add(function () {
-        player.body.reset(player.x, player.y, 0, 0);
+      player.events.onDragUpdate.add(function (sprite, pointer, dragX, dragY, snapPoint) {
+        if (!window.event) return;
 
-        startPosition = { x: player.x, y: player.y };
+        var mx = event.clientX;
+        var my = event.clientY;
+
+        var x = mx / EDIT_SCALE - 0.5 * WIDTH * (1 - EDIT_SCALE) / EDIT_SCALE;
+        var y = my / EDIT_SCALE - 0.5 * HEIGHT * (1 - EDIT_SCALE) / EDIT_SCALE;
+
+        player.x = x;
+        player.y = y;
+        player.body.reset(x, y, 0, 0);
+
+        startPosition = { x: x, y: y };
       });
 
       membranes.forEach(function (m) {
@@ -109,6 +129,8 @@
     // Called when editing is stopped
     function stop() {
       scale(1);
+
+      state.editing = false;
 
       chrome.visible = false;
 
@@ -123,12 +145,15 @@
     }
 
     // Create a JSON object that represents the level
-    function jsonify() {
+    jsonifyImpl = function () {
       var level = {
         start: { x: player.x, y: player.y },
         end: { x: recepticle.x, y: recepticle.y },
-        membranes: membranes.map(function(m) {
-          return m.json();
+        membranes: membranes.map(function (m) {
+          m.toggleEdit(false);
+          var j = m.json();
+          m.toggleEdit(true);
+          return j;
         })
       };
       return level;
@@ -185,11 +210,26 @@
     function save() {
       utils.store('level', jsonify());
     }
+
+    function addMembrane() {
+      var newLevel = jsonify();
+
+      newLevel.membranes.push({
+        vertices: [
+          { x: -100, y: 100 },
+          { x: -100, y: 200 }
+        ]
+      });
+      var nm = Membrane.create(game, stage, newLevel, newLevel.membranes.length - 1);
+      nm.toggleEdit(true);
+      membranes.push(nm);
+    }
   }
 
   return {
     state: state,
     preload: preload,
-    create: create
+    create: create,
+    jsonify: jsonify
   };
 }

@@ -1,28 +1,3 @@
 var LEVEL = {};
 
-LEVEL.ONE = {
-  start: { x: WIDTH / 8, y: HEIGHT / 2 },
-  end: { x: WIDTH * 7 / 8, y: HEIGHT / 2 },
-  membranes: [
-    {
-      vertices: [
-        { x: -20, y: HEIGHT / 3, fixed: true },
-        { x: WIDTH / 4, y: HEIGHT / 3, fixed: false },
-        { x: WIDTH / 3, y: HEIGHT * 2 / 3, fixed: false },
-        { x: WIDTH / 2, y: HEIGHT / 3 - 20, fixed: false },
-        { x: WIDTH + 20, y: HEIGHT / 3 + 20, fixed: true },
-        { x: WIDTH + 20, y: HEIGHT * 4 / 5, fixed: true },
-        { x: WIDTH * 2 / 3, y: HEIGHT * 2 / 3, fixed: false },
-        { x: WIDTH / 3, y: HEIGHT * 2 / 3 + 40, fixed: false },
-        { x: -20, y: HEIGHT * 2 / 3, fixed: true }
-      ]
-    },
-    {
-      vertices: [
-        { x: 10, y: 10 },
-        { x: 20, y: 20 },
-        { x: 10, y: 30 }
-      ]
-    }
-  ]
-};
+LEVEL.ONE = { "start": { "x": 61.33333206176758, "y": 342.66666412353516 }, "end": { "x": 1120, "y": 360 }, "membranes": [{ "vertices": [{ "x": -12, "y": 284, "fixed": true }, { "x": 118.66666666666666, "y": 265.3333333333333, "fixed": false }, { "x": 198.66666666666666, "y": 156, "fixed": false }, { "x": 476, "y": 104, "fixed": false }, { "x": 704, "y": 257.3333333333333, "fixed": false }, { "x": 1300, "y": 260, "fixed": true }, { "x": 1296, "y": 457.33333333333337, "fixed": true }, { "x": 720, "y": 478.66666666666663, "fixed": false }, { "x": 493.33333333333326, "y": 634.6666666666666, "fixed": false }, { "x": 194.66666666666666, "y": 612, "fixed": false }, { "x": 130.66666666666666, "y": 409.33333333333337, "fixed": false }, { "x": -8, "y": 410.66666666666663, "fixed": true }] }, { "vertices": [{ "x": 490.66666666666663, "y": 277.3333333333333, "fixed": true }, { "x": 364, "y": 360, "fixed": true }, { "x": 438.66666666666663, "y": 424, "fixed": true }, { "x": 556, "y": 382.6666666666667, "fixed": true }] }] };

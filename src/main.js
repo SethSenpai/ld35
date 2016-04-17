@@ -1,10 +1,5 @@
 /// <reference path="../third-party/phaser.d.ts"/>
 
-var DEBUG = false;
-var WIDTH = 1280;
-var HEIGHT = 720;
-var FONT = 'bebas';
-
 var game = new Phaser.Game(WIDTH, HEIGHT, Phaser.WEBGL, '', {
   preload: preload,
   create: create,
@@ -18,6 +13,7 @@ var target;
 var editor = Editor();
 var membranes = [];
 var startPosition;
+var membraneGroup;
 
 var won = false;
 var bounceCount = 0;
@@ -45,9 +41,9 @@ function preload() {
   game.load.physics('water-data', 'sprites/water_molecule_small.json');
   game.load.physics('recepticle-data', 'sprites/recepticle_small.json');
   
-  game.load.spritesheet('nextButton', 'sprites/next_button.png' , 230 , 86);
-  game.load.spritesheet('replayButton' , 'sprites/replay_button.png' , 314 , 86);
-  game.load.spritesheet('menuButton' , 'sprites/menu_button.png' , 255 , 86);
+  game.load.spritesheet('nextButton', 'sprites/next_button.png', 230, 86);
+  game.load.spritesheet('replayButton', 'sprites/replay_button.png', 314, 86);
+  game.load.spritesheet('menuButton', 'sprites/menu_button.png', 255, 86);
   
   Membrane.preload(game);
   editor.preload(game);
@@ -82,6 +78,10 @@ function create() {
   game.physics.startSystem(Phaser.Physics.P2JS);
   game.physics.p2.restitution = 0.8;
 
+  membraneGroup = game.make.group();
+
+  stage.addChild(membraneGroup);
+
   level.membranes.forEach(function (m, i) {
     membranes.push(Membrane.create(game, stage, level, i));
   });
@@ -92,8 +92,8 @@ function create() {
   
   //score display
   bar = game.add.graphics();
-  styleBoardLarge = {font: "86px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
-  styleBoard = {font: "34px bebaslight", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+  styleBoardLarge = {font: "36px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+  styleBoard = {font: "24px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
   
   //Text display
   var style = {font: "24px bebaslight", fill: "#fff"};
@@ -167,9 +167,8 @@ function update() {
 	  scoreBoardText = game.add.text(0,0,"Score: " + totalscore + "\nBounces: " + bounceCount + " * 20 + Time: " + (timer.ms/1000).toFixed(2), styleBoard); // "\n Bounces: " + bounceCount + "* 20 + Time: " + finishtime
 	  scoreBoardText.setTextBounds(0,360,WIDTH,150);
 	  var buttonNext = game.add.button(WIDTH-240,420 , "nextButton" , loadNextLevel , this, 1 , 0 , 2 );
-	  var buttonReplay = game.add.button(10 , 420 , "replayButton" , reloadLevel, this, 1 , 0 ,2 );
-	  var buttonMenu = game.add.button(10 , 220 , "menuButton" , loadMenu, this, 1 , 0 ,2 );
-	  
+	  var buttonReplay = game.add.button(10, 420, "replayButton", reloadLevel, this, 1, 0, 2);
+	  var buttonMenu = game.add.button(10, 220, "menuButton", loadMenu, this, 1, 0, 2);
 	}
   }
   
@@ -193,10 +192,10 @@ function loadNextLevel() {
   console.log('next level');
 }
 
-function reloadLevel(){
-	location.reload();
+function reloadLevel() {
+  location.reload();
 }
 
-function loadMenu(){
-	location.replace("index.html");
+function loadMenu() {
+  location.replace("index.html");
 }

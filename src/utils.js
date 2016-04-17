@@ -29,3 +29,7 @@ utils.retrieve = function (key) {
     return null;
   }
 };
+
+utils.clone = function (v) {
+  return JSON.parse(JSON.stringify(v));
+};
