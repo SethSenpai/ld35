@@ -11,12 +11,11 @@ var game = new Phaser.Game(WIDTH, HEIGHT, Phaser.WEBGL, '', {
 });
 
 var stage;
-var border;
 var player;
 var recepticle;
 var target;
+var editor;
 
-var editing = false;
 var won = false;
 var bounceCount = 0;
 var timer;
@@ -40,10 +39,11 @@ function create() {
   var image = game.make.image(0, 0, 'background');
   var win = game.add.audio('finish');
 
+  stage = game.add.group();
+  editor = new Editor(game, stage);
+
   game.physics.startSystem(Phaser.Physics.P2JS);
   game.physics.p2.restitution = 0.8;
-
-  stage = game.add.group();
 
   stage.add(image);
 
@@ -78,14 +78,6 @@ function create() {
   target.body.addCircle(10);
   target.body.static = true;
 
-  // Add border for scaled mode
-  border = game.make.graphics();
-  border.lineStyle(4, 0xffffff, 1);
-  border.drawRect(0, 0, WIDTH, HEIGHT);
-  border.alpha = 0;
-
-  stage.addChild(border);
-
   // Add music
   var music = game.add.audio('music');
   music.volume = 1.0;
@@ -101,7 +93,9 @@ function create() {
       return false;
     }
     return true;
-  }, this);
+  });
+
+  editor.create();
 }
 
 function update() {
@@ -115,7 +109,6 @@ function update() {
   {
 	  //display winning text and ui
   }
-	  
   
   // Accelerate player to recepticle
   var factor = 60;
@@ -123,20 +116,4 @@ function update() {
   player.body.rotation = angle + game.math.degToRad(90);
   player.body.force.x = Math.cos(angle) * factor;
   player.body.force.y = Math.sin(angle) * factor;
-
-  if (game.input.keyboard.isDown(Phaser.Keyboard.E)) {
-    scale(0.75);
-    editing = true;
-  } else {
-    scale(1);
-    editing = false;
-  }
-}
-
-function scale(s) {
-  stage.scale.set(s);
-  stage.position.set((1 - s) * WIDTH / 2, (1 - s) * HEIGHT / 2);
-  if (s < 1) {
-    border.alpha = 1;
-  }
 }
