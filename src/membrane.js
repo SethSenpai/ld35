@@ -80,6 +80,15 @@ var Membrane = (function() {
       membranes.push(nm);
     });
   }
+
+  function transformVertex(v) {
+    if (!window.event) return;
+    var mx = event.clientX;
+    var my = event.clientY;
+
+    v.x = mx / EDIT_SCALE - 0.5 * WIDTH * (1 - EDIT_SCALE) / EDIT_SCALE;
+    v.y = my / EDIT_SCALE - 0.5 * HEIGHT * (1 - EDIT_SCALE) / EDIT_SCALE;
+  }
   
   return {
     preload: function(game) {
@@ -127,6 +136,15 @@ var Membrane = (function() {
           sfx.up.play();
         });
         s.events.onDragUpdate.add(function (sprite, pointer, dragX, dragY, snapPoint) {
+          if (editor.state.editing) {
+            transformVertex(s);
+          }
+          //if (!window.event) return;
+          //console.log(s.x, s.y);
+
+          //s.x = event.clientX;
+          //s.y = event.clientY;
+          //console.log('drag', window.event);
           index[j].forEach(function (link) {
             updateEdge(link[0], s, vertices.getAt(link[1]));
           });

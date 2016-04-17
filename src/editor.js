@@ -93,7 +93,7 @@
 
     // Called when editing is started
     function start() {
-      scale(0.75);
+      scale(EDIT_SCALE);
 
       state.editing = true;
 
@@ -105,10 +105,20 @@
       player.body.reset(startPosition.x, startPosition.y, 0, 0);
       player.inputEnabled = true;
       player.input.enableDrag();
-      player.events.onDragUpdate.add(function () {
-        player.body.reset(player.x, player.y, 0, 0);
+      player.events.onDragUpdate.add(function (sprite, pointer, dragX, dragY, snapPoint) {
+        if (!window.event) return;
 
-        startPosition = { x: player.x, y: player.y };
+        var mx = event.clientX;
+        var my = event.clientY;
+
+        var x = mx / EDIT_SCALE - 0.5 * WIDTH * (1 - EDIT_SCALE) / EDIT_SCALE;
+        var y = my / EDIT_SCALE - 0.5 * HEIGHT * (1 - EDIT_SCALE) / EDIT_SCALE;
+
+        player.x = x;
+        player.y = y;
+        player.body.reset(x, y, 0, 0);
+
+        startPosition = { x: x, y: y };
       });
 
       membranes.forEach(function (m) {
