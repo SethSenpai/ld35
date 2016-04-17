@@ -45,6 +45,7 @@ function preload() {
   
   game.load.spritesheet('nextButton', 'sprites/next_button.png' , 230 , 86);
   game.load.spritesheet('replayButton' , 'sprites/replay_button.png' , 314 , 86);
+  game.load.spritesheet('menuButton' , 'sprites/menu_button.png' , 255 , 86);
   
   Membrane.preload(game);
   editor.preload(game);
@@ -162,6 +163,7 @@ function update() {
 	  scoreBoardText.setTextBounds(0,360,WIDTH,150);
 	  var buttonNext = game.add.button(WIDTH-240,420 , "nextButton" , loadNextLevel , this, 1 , 0 , 2 );
 	  var buttonReplay = game.add.button(10 , 420 , "replayButton" , reloadLevel, this, 1 , 0 ,2 );
+	  var buttonMenu = game.add.button(10 , 220 , "menuButton" , loadMenu, this, 1 , 0 ,2 );
 	  
 	}
   }
@@ -180,4 +182,8 @@ function loadNextLevel() {
 
 function reloadLevel(){
 	location.reload();
+}
+
+function loadMenu(){
+	location.replace("index.html");
 }
