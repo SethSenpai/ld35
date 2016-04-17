@@ -17,7 +17,11 @@ var Membrane = (function() {
     e.body.setRectangle(length, size, 0, 0, 0);
         
     e.clear();
-    e.beginFill(0xffffff);
+    if (v1.input.draggable || v2.input.draggable) {
+      e.beginFill(0xffffff);
+    } else {
+      e.beginFill(COLOR_PURPLE);
+    }
     e.drawRect(- length / 2, - size / 2, length, size);
     e.endFill();
   }
