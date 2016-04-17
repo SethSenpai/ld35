@@ -107,6 +107,24 @@ var Membrane = (function() {
 
         updateEdge(e, first, second);
       });
+
+      function json() {
+        var res = [];
+
+        vertices.forEach(function (v) {
+          res.push({
+            x: v.x,
+            y: v.y,
+            fixed: v.input.draggable
+          });
+        });
+
+        return res;
+      }
+
+      return {
+        json: json
+      };
     }
   };
 })();

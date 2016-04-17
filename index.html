@@ -4,10 +4,22 @@
 <script src="third-party/phaser.min.js"></script>
 <style>
   body { margin: 0; }
+  #popup {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .5);
+    display: none;
+    padding: 24px;
+    cursor: pointer;
+  }
 </style>
 <body>
+<div id="popup"></div>
+<script src="src/editor.js"></script>
 <script src="src/main.js"></script>
 <script src="src/levels.js"></script>
 <script src="src/membrane.js"></script>
 <script src="src/utils.js"></script>
-<script src="src/editor.js"></script>

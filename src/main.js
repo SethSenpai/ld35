@@ -3,6 +3,24 @@
 var DEBUG = false;
 var WIDTH = 1280;
 var HEIGHT = 720;
+var FONT = 'Jockey One';
+
+WebFontConfig = {
+  // From http://phaser.io/examples/v2/text/google-webfonts :
+  // 'active' means all requested fonts have finished loading
+  // We set a 1 second delay before calling 'createText'.
+  // For some reason if we don't the browser cannot render the text the first time it's created.
+  /*
+  active: function () {
+    game.time.events.add(Phaser.Timer.SECOND, createText, this);
+  },
+  */
+
+  // The Google Fonts we want to load (specify as many as you like in the array)
+  google: {
+    families: [FONT]
+  }
+};
 
 var game = new Phaser.Game(WIDTH, HEIGHT, Phaser.WEBGL, '', {
   preload: preload,
@@ -14,7 +32,8 @@ var stage;
 var player;
 var recepticle;
 var target;
-var editor;
+var editor = Editor();
+var membrane;
 
 var won = false;
 var bounceCount = 0;
@@ -30,8 +49,11 @@ function preload() {
   
   game.load.physics('water-data', 'sprites/water_molecule_small.json');
   game.load.physics('recepticle-data', 'sprites/recepticle_small.json');
+
+  game.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
   
   Membrane.preload(game);
+  editor.preload(game);
 }
 
 function create() {
@@ -40,14 +62,13 @@ function create() {
   var win = game.add.audio('finish');
 
   stage = game.add.group();
-  editor = new Editor(game, stage);
 
   game.physics.startSystem(Phaser.Physics.P2JS);
   game.physics.p2.restitution = 0.8;
 
   stage.add(image);
 
-  Membrane.create(game, stage, level);
+  membrane = Membrane.create(game, stage, level);
   
   //create timer
   timer = game.time.create(false);
@@ -95,7 +116,7 @@ function create() {
     return true;
   });
 
-  editor.create();
+  editor.create(game, stage);
 }
 
 function update() {
