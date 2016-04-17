@@ -139,7 +139,7 @@ function playLevel(){
 
 function showCredits(){
 	//code here
-	popCredits.innerHTML = '<span class="title">Credits:</span><br><span style="font-size:24px;"><p>Sander "snedar" Dijkhuis</p><p>Pim "Seth-Senpai" Ostendorf</p><br><br><p>Online Tools used:</p><p>SFX: http://www.bfxr.net/</p><p> Shaders: http://glslsandbox.com/</p><p> Music: http://www.purple-planet.com</p>';
+	popCredits.innerHTML = '<span class="title">Credits:</span><br><span style="font-size:24px;"><p>Sander "snedar" Dijkhuis</p><p>Pim "Seth-Senpai" Ostendorf</p><br><br><p>Online Tools used:</p><p>SFX: http://www.bfxr.net/</p><p> Shaders: http://glslsandbox.com/</p><p> Music: http://www.purple-planet.com</p><br><br><p>Created for Ludum Dare 35</p><p>18-04-2016';
 	popCredits.style.display = 'block';
       popCredits.onclick = function () {
       popCredits.style.display = 'none';
