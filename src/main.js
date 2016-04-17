@@ -25,6 +25,8 @@ var scoreBoardText;
 var styleBoard;
 var styleBoardLarge;
 var filter;
+var gameStarted = false;
+var spaceKey;
 
 function preload() { 
   game.load.image('water', 'sprites/water_molecule_small.png');
@@ -86,8 +88,7 @@ function create() {
   
   //create timer
   timer = game.time.create(false);
-  //start time. can be put somewhere else later when the level starts etc
-  timer.start();
+  
   
   //score display
   bar = game.add.graphics();
@@ -136,6 +137,10 @@ function create() {
   });
 
   editor.create(game, stage);
+  
+  //set spacebar as startkey
+  spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
 }
 
 function update() {
@@ -167,12 +172,20 @@ function update() {
 	}
   }
   
+  if(spaceKey.isDown){
+	  gameStarted = true;
+	  //start time. can be put somewhere else later when the level starts etc
+	  timer.start();
+  }
   // Accelerate player to recepticle
+  // check if player pressed space first to allow for thinking time
+  if(gameStarted == true){
   var factor = 60;
   var angle = Math.atan2(recepticle.y - player.y, recepticle.x - player.x);
   player.body.rotation = angle + game.math.degToRad(90);
   player.body.force.x = Math.cos(angle) * factor;
   player.body.force.y = Math.sin(angle) * factor;
+  }
 }
 
 function loadNextLevel() {

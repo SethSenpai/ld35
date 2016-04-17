@@ -30,7 +30,8 @@ var styleBoard;
 var styleBoardLarge;
 var filter;
 var sfx;
-var thing
+var thing;
+var spaceKey;
 
 function preload() { 
   game.load.image('water', 'sprites/water_molecule_small.png');
@@ -87,6 +88,7 @@ function create() {
   buttonCredits.onInputOver.add(overButton, this);
   var buttonLoad = game.add.button(WIDTH/2-500,200 , "loadButton" , loadLevel , this, 1 , 0 , 2 );
   buttonLoad.onInputOver.add(overButton, this);
+  
 }
  
 function update() {
