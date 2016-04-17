@@ -29,6 +29,8 @@ var scoreBoardText;
 var styleBoard;
 var styleBoardLarge;
 var filter;
+var sfx;
+var thing
 
 function preload() { 
   game.load.image('water', 'sprites/water_molecule_small.png');
@@ -36,45 +38,76 @@ function preload() {
   game.load.shader('bac_background', 'shader/background.frag');
   
   game.load.audio('music', 'sfx/bg_music.ogg');
-  game.load.audio('finish', 'sfx/finish.wav');
+  game.load.audio('membrane-down', 'sfx/press_down.wav');
   
   game.load.physics('water-data', 'sprites/water_molecule_small.json');
   
   game.load.spritesheet('playButton', 'sprites/play_button.png' , 230 , 86);
-  game.load.spritesheet('replayButton' , 'sprites/replay_button.png' , 314 , 86);
+  game.load.spritesheet('creditsButton' , 'sprites/credits_button.png' , 333 , 86);
+  game.load.spritesheet('loadButton' , 'sprites/load_button.png' , 240 , 86);
 
 }
 
 function create() {
+  
    
   //shader for background
   filter = new Phaser.Filter(game, 1000, game.cache.getShader('bac_background'));
   filter.addToWorld(0, 0, 1280, 720);
-
+ 
   game.physics.startSystem(Phaser.Physics.P2JS);
   game.physics.p2.restitution = 0.8;
-
-  // Add main 'player' molecule
-  /*player = stage.create(level.start.x, level.start.y, 'water');
-  game.physics.p2.enableBody(player, DEBUG);
-  player.body.clearShapes();
-  player.body.loadPolygon('water-data', 'water_molecule_small');*/
+  molecule = game.add.physicsGroup(Phaser.Physics.P2JS);
+  thing = molecule.create(1000,350, 'water');
+  thing.body.clearShapes();
+  thing.body.loadPolygon('water-data', 'water_molecule_small');
+  thing.body.damping = 0;
+  thing.body.angle = Math.floor(Math.random()*360);
+  thing.body.thrust(6000);
+  
+  
+  
+  //credits things
+  bar = game.add.graphics();
+  styleBoardLarge = {font: "86px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+  styleBoard = {font: "34px bebaslight", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
 
   // Add music
   var music = game.add.audio('music');
   music.volume = 1.0;
   music.play();
   
+  sfx = game.add.audio('membrane-down');
+  sfx.volume = 0.1;
+  
   // Make buttons
-  var buttonNext = game.add.button(WIDTH/2-115,100 , "playButton" , playLevel , this, 1 , 0 , 2 );
+  var buttonNext = game.add.button(WIDTH/2-500,100 , "playButton" , playLevel , this, 1 , 0 , 2 );
+  buttonNext.onInputOver.add(overButton, this);
+  var buttonCredits = game.add.button(WIDTH/2-500,300 , "creditsButton" , showCredits , this, 1 , 0 , 2 );
+  buttonCredits.onInputOver.add(overButton, this);
+  var buttonLoad = game.add.button(WIDTH/2-500,200 , "loadButton" , loadLevel , this, 1 , 0 , 2 );
+  buttonLoad.onInputOver.add(overButton, this);
 }
  
 function update() {
 	
   //upate filter for background dynamics
    filter.update();
+
+}
+function overButton(){
+	sfx.play();
+	
 }
 
 function playLevel(){
 	location.replace("play.html");
+}
+
+function showCredits(){
+	//code here
+}
+
+function loadLevel(){
+	//load code here
 }
