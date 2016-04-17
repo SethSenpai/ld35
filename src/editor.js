@@ -57,7 +57,9 @@
       x += BUTTON_WIDTH + SPACING;
       button(x, y, 'Save Level', save);
       x += BUTTON_WIDTH + SPACING;
-      button(x, y, 'Clear Level', clear);
+      button(x, y, 'Reset Level', clear);
+      x += BUTTON_WIDTH + 4 * SPACING;
+      button(x, y, 'Add Membrane', addMembrane);
     })();
 
     // Helper function to create a button
@@ -197,6 +199,20 @@
 
     function save() {
       utils.store('level', jsonify());
+    }
+
+    function addMembrane() {
+      var newLevel = jsonify();
+
+      newLevel.membranes.push({
+        vertices: [
+          { x: -100, y: 100 },
+          { x: -100, y: 200 }
+        ]
+      });
+      var nm = Membrane.create(game, stage, newLevel, newLevel.membranes.length - 1);
+      nm.toggleEdit(true);
+      membranes.push(nm);
     }
   }
 
