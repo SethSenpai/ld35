@@ -3,24 +3,7 @@
 var DEBUG = false;
 var WIDTH = 1280;
 var HEIGHT = 720;
-var FONT = 'Jockey One';
-
-WebFontConfig = {
-  // From http://phaser.io/examples/v2/text/google-webfonts :
-  // 'active' means all requested fonts have finished loading
-  // We set a 1 second delay before calling 'createText'.
-  // For some reason if we don't the browser cannot render the text the first time it's created.
-  /*
-  active: function () {
-    game.time.events.add(Phaser.Timer.SECOND, createText, this);
-  },
-  */
-
-  // The Google Fonts we want to load (specify as many as you like in the array)
-  google: {
-    families: [FONT]
-  }
-};
+var FONT = 'bebas';
 
 var game = new Phaser.Game(WIDTH, HEIGHT, Phaser.WEBGL, '', {
   preload: preload,
@@ -39,6 +22,12 @@ var startPosition;
 var won = false;
 var bounceCount = 0;
 var timer;
+var bar;
+var scoreDrawn = false;
+var scoreBoardTextLarge;
+var scoreBoardText;
+var styleBoard;
+var styleBoardLarge;
 
 function preload() { 
   game.load.image('water', 'sprites/water_molecule_small.png');
@@ -50,8 +39,8 @@ function preload() {
   
   game.load.physics('water-data', 'sprites/water_molecule_small.json');
   game.load.physics('recepticle-data', 'sprites/recepticle_small.json');
-
-  game.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+  
+  game.load.spritesheet('nextButton', 'sprites/next_button.png' , 230 , 86);
   
   Membrane.preload(game);
   editor.preload(game);
@@ -84,8 +73,13 @@ function create() {
   //start time. can be put somewhere else later when the level starts etc
   timer.start();
   
+  //score display
+  bar = game.add.graphics();
+  styleBoardLarge = {font: "36px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+  styleBoard = {font: "24px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+  
   //Text display
-  var style = {font: "24px Arial", fill: "#fff"};
+  var style = {font: "24px bebaslight", fill: "#fff"};
   scoreText = game.add.text(10,10, "Bounces: " + bounceCount , style);
   timeText = game.add.text(10,35, "Time: " + timer.duration, style);
 
@@ -134,10 +128,23 @@ function update() {
   if(won != true){
   scoreText.text = "Bounces: " + bounceCount;
   timeText.text = "Time: " + (timer.ms/1000).toFixed(2);
+  //var finishtime =  (timer.ms/1000).toFixed(2);
   }
   else
   {
-	  //display winning text and ui
+	if(scoreDrawn == false){
+	  bar.beginFill(0xdfdfdf, 0.55);
+	  bar.drawRect(0,210,WIDTH,300);
+	  bar.endFill();
+	  scoreDrawn = true;
+	  scoreBoardTextLarge = game.add.text(0,0, "FINISHED!" , styleBoardLarge);
+	  scoreBoardTextLarge.setTextBounds(0,210,WIDTH,150);
+	  var totalscore = ((bounceCount*20)+timer.ms/1000).toFixed(2);
+	  scoreBoardText = game.add.text(0,0,"Score: " + totalscore + "\nBounces: " + bounceCount + " * 20 + Time: " + (timer.ms/1000).toFixed(2), styleBoard); // "\n Bounces: " + bounceCount + "* 20 + Time: " + finishtime
+	  scoreBoardText.setTextBounds(0,360,WIDTH,150);
+	  var buttonNext = game.add.button(WIDTH-240,420 , "nextButton" , loadNextLevel , this, 1 , 0 , 2 );
+	  
+	}
   }
   
   // Accelerate player to recepticle
