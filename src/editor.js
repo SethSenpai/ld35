@@ -78,12 +78,29 @@
 
     function start() {
       scale(0.75);
+
       chrome.visible = true;
+
+      player.body.static = true;
+      player.body.reset(startPosition.x, startPosition.y, 0, 0);
+      player.inputEnabled = true;
+      player.input.enableDrag();
+      player.events.onDragUpdate.add(function () {
+        player.body.reset(player.x, player.y, 0, 0);
+
+        startPosition = { x: player.x, y: player.y };
+      });
+
+
     }
 
     function stop() {
       scale(1);
+
       chrome.visible = false;
+
+      player.body.static = false;
+      player.inputEnabled = false;
     }
 
     function jsonify() {

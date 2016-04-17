@@ -34,6 +34,7 @@ var recepticle;
 var target;
 var editor = Editor();
 var membrane;
+var startPosition;
 
 var won = false;
 var bounceCount = 0;
@@ -64,6 +65,8 @@ function create() {
   if (!level) {
     level = LEVEL.ONE;
   }
+
+  startPosition = level.start;
 
   utils.style('body { font-family: ' + FONT + '; }');
 
