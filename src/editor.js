@@ -195,8 +195,6 @@
     function save() {
       utils.store('level', jsonify());
     }
-
-    start();
   }
 
   return {
