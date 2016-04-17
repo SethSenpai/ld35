@@ -89,6 +89,8 @@
 
       chrome.visible = true;
 
+      border.visible = true;
+
       player.body.static = true;
       player.body.reset(startPosition.x, startPosition.y, 0, 0);
       player.inputEnabled = true;
@@ -99,7 +101,9 @@
         startPosition = { x: player.x, y: player.y };
       });
 
-      membrane.toggleEdit(true);
+      membranes.forEach(function (m) {
+        m.toggleEdit(true);
+      });
     }
 
     // Called when editing is stopped
@@ -108,10 +112,14 @@
 
       chrome.visible = false;
 
+      border.visible = false;
+
       player.body.static = false;
       player.inputEnabled = false;
 
-      membrane.toggleEdit(false);
+      membranes.forEach(function (m) {
+        m.toggleEdit(false);
+      });
     }
 
     // Create a JSON object that represents the level
@@ -119,7 +127,9 @@
       var level = {
         start: { x: player.x, y: player.y },
         end: { x: recepticle.x, y: recepticle.y },
-        vertices: membrane.json()
+        membranes: membranes.map(function(m) {
+          return m.json();
+        })
       };
       return level;
     }

@@ -16,7 +16,7 @@ var player;
 var recepticle;
 var target;
 var editor = Editor();
-var membrane;
+var membranes = [];
 var startPosition;
 
 var won = false;
@@ -78,7 +78,9 @@ function create() {
   game.physics.startSystem(Phaser.Physics.P2JS);
   game.physics.p2.restitution = 0.8;
 
-  membrane = Membrane.create(game, stage, level);
+  level.membranes.forEach(function (m, i) {
+    membranes.push(Membrane.create(game, stage, level, i));
+  });
   
   //create timer
   timer = game.time.create(false);

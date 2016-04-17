@@ -32,8 +32,7 @@ var Membrane = (function() {
       game.load.audio('membrane-up', 'sfx/press_up.wav');
       game.load.audio('bounce-hurt', 'sfx/bounce_hurt.wav');
     },
-    create: function(game, stage, level) {
-      
+    create: function(game, stage, level, i) {
       var sfx = {
         down: game.add.audio('membrane-down'),
         up: game.add.audio('membrane-up'),
@@ -59,7 +58,7 @@ var Membrane = (function() {
       var lastBounce;
       
       // Create vertex sprites
-      level.vertices.forEach(function(v, i) {
+      level.membranes[i].vertices.forEach(function(v, i) {
         var s = vertices.create(v.x, v.y, 'vertex');
         s.anchor.set(0.5);
         
@@ -123,14 +122,14 @@ var Membrane = (function() {
       }
 
       function toggleEdit(b) {
-        var i = 0;
+        var j = 0;
         vertices.forEach(function (v) {
-          if (b || !level.vertices[i].fixed) {
+          if (b || !level.membranes[i].vertices[j].fixed) {
             v.input.enableDrag();
           } else {
             v.input.disableDrag();
           }
-          i++;
+          j++;
         });
       }
 
