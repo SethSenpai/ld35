@@ -15,7 +15,7 @@ var stage;
 var player;
 var recepticle;
 var target;
-//var editor = Editor();
+var editor = Editor();
 var membranes = [];
 var startPosition;
 
@@ -78,7 +78,7 @@ function create() {
   music.play();
   
   sfx = game.add.audio('membrane-down');
-  sfx.volume = 0.1;
+  sfx.volume = 1.0;
   
   // Make buttons
   var buttonNext = game.add.button(WIDTH/2-500,100 , "playButton" , playLevel , this, 1 , 0 , 2 );
@@ -109,5 +109,28 @@ function showCredits(){
 }
 
 function loadLevel(){
-	//load code here
+	 var area;
+
+      popup.innerHTML = '<textarea cols=80 rows=25></textarea><p style="font-size:24px">Paste your level-data and press ENTER!';
+      popup.style.display = 'block';
+      popup.onclick = function () {
+      popup.style.display = 'none';
+      };
+
+      area = popup.childNodes[0];
+      area.addEventListener('keyup', function (e) {
+        if (e.keyCode == 13) {
+          try {
+            var json = JSON.parse(area.value);
+            utils.store('level', json);
+            location.replace("play.html");
+          } catch (e) {
+            alert('invalid json');
+          }
+        }
+      });
+      area.addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
+      area.focus();
 }
