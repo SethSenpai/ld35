@@ -40,9 +40,11 @@
       var y = HEIGHT - BUTTON_HEIGHT - PADDING;
       button(x, y, 'Export Level…', showExportPopup);
       x += BUTTON_WIDTH + SPACING;
-      button(x, y, 'Load Level…', load);
+      button(x, y, 'Import Level…', showImportPopup);
       x += BUTTON_WIDTH + SPACING;
       button(x, y, 'Save Level', save);
+      x += BUTTON_WIDTH + SPACING;
+      button(x, y, 'Clear Level', clear);
     })();
 
     // Create a button
@@ -96,19 +98,49 @@
     function showExportPopup() {
       var level = jsonify();
       var s = JSON.stringify(level);
+      var area;
 
-      popup.innerHTML =
-        '<textarea cols=80 rows=25 autofocus readonly>' + s + '</textarea>'
-        + '<p>ctrl-a ctrl-c';
-      popup.childNodes[0].select();
+      popup.innerHTML = '<textarea cols=80 rows=25 readonly>' + s + '</textarea>' + '<p>ctrl-c';
       popup.style.display = 'block';
       popup.onclick = function () {
         popup.style.display = 'none';
       };
+
+      area = popup.childNodes[0];
+      area.focus();
+      area.select();
     }
 
-    function load() {
-      console.log('not implemented yet');
+    function showImportPopup() {
+      var area;
+
+      popup.innerHTML = '<textarea cols=80 rows=25></textarea><p>ctrl-v enter';
+      popup.style.display = 'block';
+      popup.onclick = function () {
+        popup.style.display = 'none';
+      };
+
+      area = popup.childNodes[0];
+      area.addEventListener('keyup', function (e) {
+        if (e.keyCode == 13) {
+          try {
+            var json = JSON.parse(area.value);
+            utils.store('level', json);
+            location.reload();
+          } catch (e) {
+            alert('invalid json');
+          }
+        }
+      });
+      area.addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
+      area.focus();
+    }
+
+    function clear() {
+      utils.store('level', null);
+      location.reload();
     }
 
     function save() {

@@ -115,7 +115,7 @@ var Membrane = (function() {
           res.push({
             x: v.x,
             y: v.y,
-            fixed: v.input.draggable
+            fixed: !v.input.draggable
           });
         });
 
