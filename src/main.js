@@ -18,6 +18,7 @@ var target;
 var editor = Editor();
 var membranes = [];
 var startPosition;
+var membraneGroup;
 
 var won = false;
 var bounceCount = 0;
@@ -77,6 +78,10 @@ function create() {
 
   game.physics.startSystem(Phaser.Physics.P2JS);
   game.physics.p2.restitution = 0.8;
+
+  membraneGroup = game.make.group();
+
+  stage.addChild(membraneGroup);
 
   level.membranes.forEach(function (m, i) {
     membranes.push(Membrane.create(game, stage, level, i));

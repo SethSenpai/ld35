@@ -51,7 +51,8 @@ var Membrane = (function() {
       game.load.audio('membrane-up', 'sfx/press_up.wav');
       game.load.audio('bounce-hurt', 'sfx/bounce_hurt.wav');
     },
-    create: function(game, stage, level, i) {
+    create: function (game, stage, level, i) {
+      var removed = false;
       var sfx = {
         down: game.add.audio('membrane-down'),
         up: game.add.audio('membrane-up'),
@@ -64,8 +65,8 @@ var Membrane = (function() {
       var edges = game.make.group();
       var vertices = game.make.group();
 
-      stage.addChild(edges);
-      stage.addChild(vertices);
+      membraneGroup.addChild(edges);
+      membraneGroup.addChild(vertices);
       
       // Lookup table:
       // { 0: [[edge1, 1], ...],
@@ -122,7 +123,7 @@ var Membrane = (function() {
         e.inputEnabled = true;
 
         // Add new vertices if in editing mode
-        e.events.onInputDown.add(function () {
+        e.events.onInputDown.addOnce(function () {
           if (editor.state.editing) {
             addVertex(game, stage, level, i, j);
           }
@@ -165,8 +166,16 @@ var Membrane = (function() {
       }
 
       function remove() {
-        stage.removeChild(vertices);
-        stage.removeChild(edges);
+        vertices.forEach(function (vertex) {
+          vertex.inputEnabled = false;
+        });
+        edges.forEach(function (edge) {
+          edge.body.clearShapes();
+          edge.inputEnabled = false;
+        });
+        membraneGroup.removeChild(vertices);
+        membraneGroup.removeChild(edges);
+        removed = true;
       }
 
       return {
