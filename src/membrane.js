@@ -90,6 +90,7 @@ var Membrane = (function() {
         e.body.static = true;
         e.body.onBeginContact.add(function () {
           sfx.bounce.play();
+		  bounceCount ++;
         });
         e.alpha = 0.5;
         

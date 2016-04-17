@@ -18,6 +18,8 @@ var target;
 
 var editing = false;
 var won = false;
+var bounceCount = 0;
+var timer;
 
 function preload() { 
   game.load.image('water', 'sprites/water_molecule_small.png');
@@ -46,6 +48,16 @@ function create() {
   stage.add(image);
 
   Membrane.create(game, stage, level);
+  
+  //create timer
+  timer = game.time.create(false);
+  //start time. can be put somewhere else later when the level starts etc
+  timer.start();
+  
+  //Text display
+  var style = {font: "24px Arial", fill: "#fff"};
+  scoreText = game.add.text(10,10, "Bounces: " + bounceCount , style);
+  timeText = game.add.text(10,35, "Time: " + timer.duration, style);
 
   // Add main 'player' molecule
   player = stage.create(level.start.x, level.start.y, 'water');
@@ -93,7 +105,18 @@ function create() {
 }
 
 function update() {
-
+	
+  // Update scoreboard
+  if(won != true){
+  scoreText.text = "Bounces: " + bounceCount;
+  timeText.text = "Time: " + timer.seconds;
+  }
+  else
+  {
+	  //display winning text and ui
+  }
+	  
+  
   // Accelerate player to recepticle
   var factor = 60;
   var angle = Math.atan2(recepticle.y - player.y, recepticle.x - player.x);
