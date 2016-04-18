@@ -195,17 +195,35 @@ function update() {
     forces.repellers().forEach(function (r) {
       var factor = REPELLER_FORCE;
       var angle = Math.atan2(r.y - player.y, r.x - player.x);
+      var distance = utils.distance(r, player);
       //player.body.rotation -= angle + game.math.degToRad(90);
-      player.body.force.x -= Math.cos(angle) * factor;
-      player.body.force.y -= Math.sin(angle) * factor;
+
+      // f(distance) = distance_factor
+      // f(RADIUS) = 0.1, f(0) = FORCE
+      // f(t) = exp(a * (t - b)) * FORCE
+      // f(0) = exp(-ab) * FORCE = FORCE => -ab = 0 => (a = 0 v) b = 0
+      // f(RADIUS) = exp(a * RADIUS) * FORCE = 0.1
+      // => a = log(0.1 / FORCE) / RADIUS
+      //var distanceFactor = Math.exp(Math.log(0.1 / REPELLER_FORCE) / REPELLER_RADIUS * distance) * REPELLER_FORCE;
+
+      // meh
+      //var distanceFactor = distance < REPELLER_RADIUS ? 1 : 0;
+
+      // ok wait
+      var distanceFactor = Math.max(0, REPELLER_RADIUS - distance) / REPELLER_RADIUS;
+
+      player.body.force.x -= Math.cos(angle) * factor * distanceFactor;
+      player.body.force.y -= Math.sin(angle) * factor * distanceFactor;
     });
 
     forces.attractors().forEach(function (r) {
       var factor = ATTRACTOR_FORCE;
       var angle = Math.atan2(r.y - player.y, r.x - player.x);
       //player.body.rotation += angle + game.math.degToRad(90);
-      player.body.force.x += Math.cos(angle) * factor;
-      player.body.force.y += Math.sin(angle) * factor;
+      var distance = utils.distance(r, player);
+      var distanceFactor = Math.max(0, REPELLER_RADIUS - distance) / REPELLER_RADIUS;
+      player.body.force.x += Math.cos(angle) * factor * distanceFactor;
+      player.body.force.y += Math.sin(angle) * factor * distanceFactor;
     });
   }else{
 	var angle = Math.atan2(recepticle.y - player.y, recepticle.x - player.x);
