@@ -111,6 +111,8 @@
 
       border.visible = true;
 
+      spaceText.visible = false;
+
       player.body.static = true;
       player.body.reset(startPosition.x, startPosition.y, 0, 0);
       player.inputEnabled = true;
@@ -150,6 +152,8 @@
 
       player.body.static = false;
       player.inputEnabled = false;
+
+      spaceText.visible = true;
 
       membranes.forEach(function (m) {
         m.toggleEdit(false);
