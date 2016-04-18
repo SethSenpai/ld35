@@ -13,3 +13,5 @@ var FIXED_REPELLER_ALPHA = 1;
 var FIXED_ATTRACTOR_ALPHA = 1;
 var REPELLER_RADIUS = 200;
 var ATTRACTOR_RADIUS = 200;
+
+var HOTKEY_TEXT = "This game has several useful hotkeys: M -> Return to menu, R -> Reload level, E -> Edit Mode.";

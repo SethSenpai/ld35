@@ -80,7 +80,7 @@ function create() {
   style = {font: "24px bebaslight", fill: "#fff"};
   
   //in menu tutorials
-  explainText = game.add.text(0,0, "This game has several useful hotkeys: M -> Return to menu, R -> Reload level, E -> Edit Mode.", style);
+  explainText = game.add.text(0,0, HOTKEY_TEXT, style);
   explainText.setTextBounds(WIDTH/2-500,660,200,200);
 
   // Add music
@@ -115,7 +115,6 @@ function overButton(switchValue){
 	switch(switchValue.key)
 	{
 		case "playButton":
-			console.log("trigger");
 			explainText.text = "This button brings you back into the game, it always loads the level you last played. To load a different level use the load button below!";
 		break;
 		
@@ -130,7 +129,7 @@ function overButton(switchValue){
 }
 
 function outButton(){
-	explainText.text = "This game has several useful hotkeys: M -> Return to menu,   R -> Reload level,   E -> Edit Mode. \nWhen editing hold D to delete a node and Press F to fix a node. Clicking on a line adds an extra node. ";
+  explainText.text = HOTKEY_TEXT;
 }
 
 function playLevel(){
