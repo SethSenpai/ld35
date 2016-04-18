@@ -32,10 +32,16 @@
 
     // Add border for scaled mode
     border = game.make.graphics();
-    border.lineStyle(4, 0xffffff, 1);
+    border.lineStyle(EDIT_BORDER_SIZE, 0xffffff, 1);
     border.drawRect(0, 0, WIDTH, HEIGHT);
     border.alpha = 0;
     stage.addChild(border);
+
+    // Add help text
+    chrome.addChild(game.make.text((1 - EDIT_SCALE) * WIDTH / 2 - EDIT_BORDER_SIZE, 10, "Hold D to delete a node. Hold F to fix a node. Click a line to add a node.", {
+      font: "24px bebaslight",
+      fill: "#fff"
+    }));
 
     // Handle edit mode switches
     edit.onDown.add(function () {
