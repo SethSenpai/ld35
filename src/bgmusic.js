@@ -23,10 +23,10 @@ function create() {
   this.stage.disableVisibilityChange = true;
   
   // Add music
-  var music = game.add.audio('music');
-  music.volume = 1.0;
+  var music = game.add.audio('music',1.0,true,true);
+  //music.volume = 1.0;
   music.play();
-  music.loop = true;
+  //music.loop = true;
 }
 
 function update() {
