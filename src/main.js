@@ -86,8 +86,8 @@ function create() {
   
   //score display
   bar = game.add.graphics();
-  styleBoardLarge = {font: "36px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
-  styleBoard = {font: "24px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+  styleBoardLarge = {font: "96px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+  styleBoard = {font: "36px bebaslight", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
   
   //Text display
   var style = {font: "24px bebaslight", fill: "#fff"};
