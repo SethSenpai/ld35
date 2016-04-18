@@ -28,6 +28,7 @@ var styleBoardLarge;
 var filter;
 var gameStarted = false;
 var spaceKey;
+var spaceText;
 
 function preload() { 
   game.load.image('water', 'sprites/water_molecule_small.png');
@@ -88,6 +89,10 @@ function create() {
   bar = game.add.graphics();
   styleBoardLarge = {font: "96px bebas", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
   styleBoard = {font: "36px bebaslight", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+  
+  //space to start text
+  spaceText = game.add.text(0,0,"Press SPACE to let it go!" , styleBoard);
+  spaceText.setTextBounds(0,0,WIDTH,150);
   
   //Text display
   var style = {font: "24px bebaslight", fill: "#fff"};
@@ -181,6 +186,7 @@ function update() {
     gameStarted = true;
     //start time. can be put somewhere else later when the level starts etc
     timer.start();
+	spaceText.text = " ";
   }
   
   // Accelerate player to recepticle
