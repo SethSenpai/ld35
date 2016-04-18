@@ -1,71 +1,45 @@
-﻿<!doctype html>
+<!doctype html>
 <meta charset="utf-8">
-<title>Play a Level</title>
+<title>Via Morpha</title>
 <script src="third-party/phaser.min.js"></script>
 <style>
-  body { margin: 0; }
-  @font-face {  font-family: 'Bebas';  src: url('fonts/bebasbold.ttf') format('truetype');} 
-  @font-face {  font-family: 'bebaslight';  src: url('fonts/bebaslight.ttf') format('truetype');} 
-  body {    font-family: 'bebaslight';}.fontLoader {    position: absolute;    left: -1000px;}
-  .fontLoader2 { font-family: 'Bebas';   position: absolute;    left: -1000px;}
-  #popup {
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, .5);
-    display: none;
-    padding: 24px;
-	padding-left:660px;
-    cursor: pointer;
-    color: #ffffff;
-  }
-  pre {
-    font: 12px consolas, monospace;
-  }
- #slvl{
-		border: 0 !important;  /*Removes border*/
-		-webkit-appearance: none;  /*Removes default chrome and safari style*/
-		-moz-appearance: none; /* Removes Default Firefox style*/
-        appearance:none;
-		background: rgba(0,0,0,0);
-		width: 130px; /*Width of select dropdown to give space for arrow image*/
-		font-family:bebaslight;
-		font-size:24px;
-		text-indent: 0.01px; /* Removes default arrow from firefox*/
-		text-overflow: "";  /*Removes default arrow from firefox*/ /*My custom style for fonts*/
-		color: #00ffff;
-		border-radius: 0px;
-		margin-top:10px;
- }
- #popCredits {
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, .5);
-    display: none;
-    padding: 24px;
-	padding-left:660px;
-    cursor: pointer;
-    color: #ffffff;
-  }
-  .title{
-  font-size:56px;
-  font-family:Bebas;
-  }
+body {
+	background-color:#000;
+	margin: 0;
+}
+
+iframe {
+	height:720px;
+	width:1280px;
+	border:0px;
+	margin:auto;
+	position:relative;
+	display:block;
+}
+
+div {
+position:fixed !important;
+position:absolute;
+top:0;
+right:0;
+bottom:0;
+left:0;
+}
 </style>
 <body>
-<div id="popup"></div>
-<div id="popCredits"></div>
-<script src="src/config.js"></script>
-<script src="src/editor.js"></script>
-<!--<script src="src/main.js"></script>-->
-<script src="src/levels.js"></script>
-<script src="src/membrane.js"></script>
-<script src="src/utils.js"></script>
-<script src="src/startmenu.js"></script>
-<span class="fontLoader">.</span>
-<span class="fontLoader2">.</span>
+
+<iframe src="menu.html" id="game"></iframe>
+
+<script src="src/bgmusic.js"></script>
+<script>
+function shift()
+            {
+                var heights = window.innerHeight;
+                document.getElementById("game").style.top = (heights-720)/2 + "px";
+            }
+            shift();
+            window.onresize = function() {
+                shift();
+            };
+
+</script>

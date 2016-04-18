@@ -86,7 +86,7 @@ function create() {
   // Add music
   var music = game.add.audio('music');
   music.volume = 1.0;
-  music.play();
+  //music.play();
   
   sfx = game.add.audio('membrane-down');
   sfx.volume = 1.0;

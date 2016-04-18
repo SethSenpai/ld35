@@ -116,7 +116,7 @@ function create() {
   // Add music
   var music = game.add.audio('music');
   music.volume = 1.0;
-  music.play();
+  //music.play();
 
   // Handle special collisions
   game.physics.p2.setPostBroadphaseCallback(function (a, b) {
@@ -142,7 +142,7 @@ function create() {
 
   // M for menu
   game.input.keyboard.addKey(Phaser.Keyboard.M).onDown.add(function () {
-    location.replace('.');
+    location.replace('menu.html');
   });
 }
 
@@ -233,7 +233,7 @@ function reloadLevel() {
 }
 
 function loadMenu() {
-  location.replace("index.html");
+  location.replace("menu.html");
 }
 
 function loadCurrentLevel() {
