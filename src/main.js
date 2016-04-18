@@ -207,6 +207,9 @@ function update() {
       player.body.force.x += Math.cos(angle) * factor;
       player.body.force.y += Math.sin(angle) * factor;
     });
+  }else{
+	var angle = Math.atan2(recepticle.y - player.y, recepticle.x - player.x);
+    player.body.rotation = angle + game.math.degToRad(90);
   }
 }
 
